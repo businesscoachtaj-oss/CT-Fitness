@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strength Coaching Business Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0e0e0e; --bg2:#161616; --bg3:#1e1e1e; --bg4:#262626;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+  --text:#f0ede8; --muted:#888682; --dim:#4a4845;
+  --orange:#e8622a; --orange2:#f0a04a;
+  --green:#2ec77a; --purple:#9b7ff0; --blue:#4a9eff; --red:#e05555;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+
+/* SIDEBAR */
+#sidebar{
+  width:230px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:50;
+}
+.sb-logo{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
+.sb-logo .ey{font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+.sb-logo h1{font-family:'Bebas Neue';font-size:26px;letter-spacing:.03em;line-height:1.1;color:var(--text)}
+.sb-section{padding:16px 12px 4px}
+.sb-section-label{font-size:9px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);padding:0 8px;margin-bottom:4px}
+.sb-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border:none;background:none;color:var(--muted);font-size:12.5px;font-family:'DM Sans';text-align:left;cursor:pointer;border-radius:7px;transition:all .15s}
+.sb-btn:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+.sb-btn.active{color:var(--orange);background:rgba(232,98,42,0.1);font-weight:500}
+.sb-btn .ic{font-size:13px;width:16px;text-align:center;flex-shrink:0}
+.sb-footer{margin-top:auto;padding:16px 16px;border-top:1px solid var(--border)}
+.sb-badge{background:rgba(232,98,42,0.08);border:1px solid rgba(232,98,42,0.3);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--orange2);line-height:1.5}
+.sb-badge strong{display:block;font-size:11px;color:var(--orange);margin-bottom:2px}
+
+/* MAIN */
+#main{margin-left:230px;flex:1;min-height:100vh}
+.panel{display:none;padding:44px 48px 80px;max-width:860px}
+.panel.active{display:block}
+
+/* PANEL HEADER */
+.ph{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.ey{font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.ph h2{font-family:'Bebas Neue';font-size:52px;letter-spacing:.02em;line-height:1;margin-bottom:10px}
+.ph p{font-size:14px;color:var(--muted);line-height:1.75;max-width:580px}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:5px}
+.card ul{padding-left:18px}
+.card-o{background:rgba(232,98,42,0.06);border:1px solid rgba(232,98,42,0.35);border-radius:12px;padding:20px 22px;margin-bottom:12px}
+.card-o h3{font-size:14px;font-weight:600;color:var(--orange2);margin-bottom:8px}
+.card-o p{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:6px}
+.card-g{background:rgba(46,199,122,0.07);border:1px solid rgba(46,199,122,0.28);border-radius:12px;padding:20px 22px;margin-bottom:12px}
+.card-g h3{font-size:14px;font-weight:600;color:var(--green);margin-bottom:8px}
+.card-g p{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:6px}
+.card-r{background:rgba(224,85,85,0.07);border:1px solid rgba(224,85,85,0.32);border-radius:12px;padding:20px 22px;margin-bottom:12px}
+.card-r h3{font-size:14px;font-weight:600;color:var(--red);margin-bottom:8px}
+.card-r p{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:6px}
+
+/* OFFER BLOCK */
+.ob{border:1px solid var(--border2);border-radius:14px;overflow:hidden;margin-bottom:20px}
+.ob-top{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.ob-tag{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:7px}
+.ob-name{font-family:'Bebas Neue';font-size:30px;letter-spacing:.02em;line-height:1;margin-bottom:4px}
+.ob-sub{font-size:12px;color:var(--muted)}
+.ob-price{font-family:'Bebas Neue';font-size:46px;letter-spacing:.02em;line-height:1}
+.ob-plabel{font-size:11px;color:var(--muted);margin-top:2px;text-align:right}
+.ob-body{padding:20px 24px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.cl{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+
+/* DELIVER ITEM */
+.di{display:flex;gap:9px;align-items:flex-start;margin-bottom:9px}
+.dd{width:19px;height:19px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:2px}
+.dg{background:rgba(46,199,122,0.12);color:var(--green)}
+.dp{background:rgba(155,127,240,0.12);color:var(--purple)}
+.da{background:rgba(240,160,74,0.12);color:var(--orange2)}
+.db{background:rgba(74,158,255,0.12);color:var(--blue)}
+.dt{font-size:12.5px;color:var(--text);line-height:1.4;margin-bottom:2px}
+.ds{font-size:11.5px;color:var(--muted);line-height:1.5}
+
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}
+.pill{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid}
+.pg{background:rgba(46,199,122,0.07);color:var(--green);border-color:rgba(46,199,122,0.22)}
+.pp{background:rgba(155,127,240,0.07);color:var(--purple);border-color:rgba(155,127,240,0.22)}
+.pa{background:rgba(240,160,74,0.07);color:var(--orange2);border-color:rgba(240,160,74,0.22)}
+.pb{background:rgba(74,158,255,0.07);color:var(--blue);border-color:rgba(74,158,255,0.22)}
+.po{background:rgba(232,98,42,0.08);color:var(--orange);border-color:rgba(232,98,42,0.22)}
+
+/* TIMEBOX */
+.tb{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-top:16px}
+.tb-lbl{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.tr{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.tr:last-of-type{border:none}
+.tt{color:var(--muted);flex:1}
+.tv{font-family:'DM Mono';font-size:11px;color:var(--text);background:var(--bg4);padding:2px 7px;border-radius:4px;white-space:nowrap}
+.tb-total{margin-top:12px;padding-top:12px;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center}
+.tb-tl{font-size:12.5px;font-weight:500}
+.tb-tv{font-family:'Bebas Neue';font-size:26px;letter-spacing:.02em}
+
+/* GUARANTEE */
+.guar{border:2px solid var(--orange2);border-radius:12px;padding:18px 20px;margin:16px 0;background:rgba(240,160,74,0.04)}
+.guar-lbl{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--orange2);margin-bottom:6px}
+.guar p{font-size:14px;color:var(--text);font-weight:500;line-height:1.65}
+.guar small{display:block;font-size:12px;color:var(--muted);margin-top:7px;font-weight:400}
+
+/* HIGHLIGHT */
+.hl{border-left:3px solid var(--orange);background:rgba(232,98,42,0.05);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0;font-size:13px;color:var(--text);line-height:1.7;font-style:italic}
+
+/* TABLE */
+.tw{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 13px;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--bg3);border-bottom:1px solid var(--border)}
+td{padding:11px 13px;font-size:12.5px;color:var(--text);border-bottom:1px solid var(--border);line-height:1.4}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.013)}
+.mn{font-family:'DM Mono';font-size:11.5px}
+.cg{color:var(--green);font-weight:500}
+.ca{color:var(--orange2);font-weight:500}
+.cr{color:var(--red);font-weight:500}
+
+/* STATS */
+.stats{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:14px}
+.stat{flex:1;min-width:110px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 16px}
+.stat-n{font-family:'Bebas Neue';font-size:38px;letter-spacing:.02em;line-height:1;margin-bottom:3px}
+.stat-l{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* MARGIN BOX */
+.mb{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 15px;margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.7}
+
+/* ROADMAP */
+.rm{display:flex;gap:18px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.rm:last-child{border-bottom:none}
+.rm-left{flex-shrink:0;width:72px;text-align:center}
+.rm-badge{font-family:'Bebas Neue';font-size:12px;letter-spacing:.07em;padding:4px 8px;border-radius:5px;display:inline-block;margin-bottom:6px}
+.rm-rev{font-family:'DM Mono';font-size:10px;color:var(--orange2);line-height:1.4}
+.rm-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+.rm-item{display:flex;gap:7px;font-size:12.5px;color:var(--muted);margin-bottom:5px;line-height:1.6}
+.rm-check{color:var(--green);flex-shrink:0}
+
+/* VALUE BARS */
+.vrow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.vrow:last-child{border-bottom:none}
+.vl{font-size:12.5px;color:var(--muted);flex:2}
+.vbar{flex:3;background:var(--bg4);border-radius:3px;height:5px}
+.vfill{height:5px;border-radius:3px}
+.vtag{font-family:'DM Mono';font-size:11px;min-width:70px;text-align:right;font-weight:500}
+
+/* CONTENT DAYS */
+.cd{display:flex;gap:10px;margin-bottom:8px}
+.cd-day{width:76px;flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em}
+.cd-body{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 14px}
+.cd-type{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.cd-desc{font-size:12.5px;color:var(--muted)}
+.cd-time{font-size:11px;color:var(--dim);margin-top:3px;font-family:'DM Mono'}
+
+/* MSG BOX */
+.msg{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--text);line-height:1.8;white-space:pre-line;margin-bottom:8px}
+.copy-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans';transition:all .15s;margin-bottom:14px}
+.copy-btn:hover{border-color:var(--orange);color:var(--orange)}
+
+/* VISION */
+.vc{flex:1;min-width:170px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.vc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.vc.y1::before{background:var(--orange)}
+.vc.y2::before{background:var(--purple)}
+.vc.y3::before{background:var(--green)}
+.vy{font-family:'Bebas Neue';font-size:40px;letter-spacing:.02em;line-height:1;margin-bottom:3px}
+.vr{font-family:'DM Mono';font-size:12px;color:var(--orange2);margin-bottom:8px;font-weight:500}
+.vd{font-size:12.5px;color:var(--muted);line-height:1.65}
+
+hr.div{border:none;border-top:1px solid var(--border);margin:16px 0}
+strong{color:var(--text);font-weight:600}
+
+/* MOBILE */
+#mob-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:38px;height:38px;align-items:center;justify-content:center;font-size:16px;cursor:pointer;color:var(--text)}
+@media(max-width:720px){
+  #sidebar{transform:translateX(-100%);transition:transform .25s}
+  #sidebar.open{transform:translateX(0)}
+  #main{margin-left:0}
+  .panel{padding:24px 16px 60px}
+  .two{grid-template-columns:1fr}
+  .ph h2{font-size:36px}
+  #mob-btn{display:flex}
+  .stats{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<button id="mob-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="ey">Your Business Plan</div>
+    <h1>Strength<br>Coaching<br>Blueprint</h1>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Foundation</div>
+    <button class="sb-btn active" data-nav="brand" onclick="show('brand')"><span class="ic">⚡</span>Your Brand & Story</button>
+    <button class="sb-btn" data-nav="offer12" onclick="show('offer12')"><span class="ic">🎯</span>12-Week Program</button>
+    <button class="sb-btn" data-nav="monthly" onclick="show('monthly')"><span class="ic">🔄</span>Monthly Ongoing</button>
+    <button class="sb-btn" data-nav="premium" onclick="show('premium')"><span class="ic">⭐</span>Premium 1:1</button>
+    <button class="sb-btn" data-nav="standard" onclick="show('standard')"><span class="ic">🏋️</span>Standard 1:1</button>
+    <button class="sb-btn" data-nav="pricing" onclick="show('pricing')"><span class="ic">💰</span>Pricing & Revenue</button>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Growth</div>
+    <button class="sb-btn" data-nav="acquire" onclick="show('acquire')"><span class="ic">🤝</span>Getting Clients</button>
+    <button class="sb-btn" data-nav="sales" onclick="show('sales')"><span class="ic">📞</span>Sales & Closing</button>
+    <button class="sb-btn" data-nav="content" onclick="show('content')"><span class="ic">📱</span>Content Strategy</button>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Execution</div>
+    <button class="sb-btn" data-nav="roadmap" onclick="show('roadmap')"><span class="ic">🗺️</span>12-Month Roadmap</button>
+    <button class="sb-btn" data-nav="tools" onclick="show('tools')"><span class="ic">🛠️</span>Tools & Systems</button>
+    <button class="sb-btn" data-nav="vision" onclick="show('vision')"><span class="ic">🔭</span>3-Year Vision</button>
+  </div>
+
+  <div class="sb-footer">
+    <div class="sb-badge">
+      <strong>Built on Hormozi Principles</strong>
+      $100M Offers · Gym Launch · CLOSER · Value Equation
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════ BRAND ═══════════════════ -->
+<div class="panel active" data-panel="brand">
+  <div class="ph">
+    <div class="ey">Section 01 — Foundation</div>
+    <h2>Your Brand & Story</h2>
+    <p>You were overweight. You fixed it. That's not a backstory — that's your entire marketing strategy. No one can compete with lived experience.</p>
+  </div>
+
+  <div class="card-o">
+    <h3>Your unfair advantage</h3>
+    <p>Hormozi calls this "pain to profit." You lived the problem, solved it, and now you sell the solution. Every young guy aged 18–30 who's struggling with his body sees himself in you. That emotional connection is worth more than any marketing budget.</p>
+  </div>
+
+  <div class="hl">"I was overweight, had no idea what I was doing in the gym, and felt embarrassed every time I walked in. Now I coach young guys to do what I did — but faster, and without the years of wasted effort I went through."</div>
+
+  <div class="card">
+    <h3>Your niche in one sentence</h3>
+    <p style="font-size:15px;color:var(--text);font-weight:500;margin-bottom:10px;line-height:1.5">"I help guys aged 18–30 who are overweight or skinny-fat build their first real physique — through strength training, smart nutrition, and a coach who's been exactly where they are."</p>
+    <hr class="div">
+    <p>Specific enough to attract the right person and repel everyone else. "I help people get fit" gets ignored. This sentence stops a 24-year-old dead mid-scroll.</p>
+  </div>
+
+  <div class="card">
+    <h3>Know your avatar better than he knows himself</h3>
+    <p style="margin-bottom:8px">Hormozi: if you can describe someone's problem better than they can, they automatically assume you have the solution. Your guy:</p>
+    <ul>
+      <li>18–30, working or at uni, limited time and energy</li>
+      <li>Has tried the gym before, quit within 8 weeks</li>
+      <li>Watches YouTube fitness but feels more confused, not less</li>
+      <li>Ashamed to take his shirt off, avoids photos, cancels beach trips</li>
+      <li>Wants to look good but doesn't know where to actually start</li>
+      <li>Has told himself "I'll start Monday" more times than he can count</li>
+      <li>Deep down wants someone to just tell him exactly what to do</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Brand name direction — keep it personal right now</h3>
+    <p>You're not a faceless app. You're a real person who transformed. That's the product. Pick a name and move — it becomes real through the content, not the name.</p>
+    <div class="pills" style="margin-top:10px">
+      <span class="pill po">Your name + Coaching</span>
+      <span class="pill pa">"Built From" — built from scratch</span>
+      <span class="pill pg">Something raw about the journey</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ 12-WEEK OFFER ═══════════════════ -->
+<div class="panel" data-panel="offer12">
+  <div class="ph">
+    <div class="ey">Section 02 — Foundation</div>
+    <h2>The 12-Week Foundation Program</h2>
+    <p>Your flagship offer. Sold as a complete transformation system, not sessions. This is how you charge $997 instead of $50/hr.</p>
+  </div>
+
+  <div class="ob">
+    <div class="ob-top">
+      <div>
+        <div class="ob-tag" style="background:rgba(232,98,42,0.12);color:var(--orange)">Flagship offer</div>
+        <div class="ob-name">The Foundation Program</div>
+        <div class="ob-sub">12 weeks · fully personalised · results guaranteed</div>
+      </div>
+      <div>
+        <div class="ob-price" style="color:var(--orange2)">$997</div>
+        <div class="ob-plabel">AUD · paid upfront</div>
+      </div>
+    </div>
+    <div class="ob-body">
+      <div class="two">
+        <div>
+          <div class="cl">Training</div>
+          <div class="di"><div class="dd dg">✦</div><div><div class="dt">Custom strength program</div><div class="ds">Built around their schedule — 3, 4 or 5 days/week. Progressive overload from week 1.</div></div></div>
+          <div class="di"><div class="dd dg">✦</div><div><div class="dt">Weekly program updates</div><div class="ds">Adjusted every 7 days based on progress and feedback. Not a static PDF sent on day one.</div></div></div>
+          <div class="di"><div class="dd db">▶</div><div><div class="dt">Form check screen shares (up to 2/week)</div><div class="ds">They film their lifts, you record a screen share breakdown — drawing on the video, explaining exactly what to fix.</div></div></div>
+          <div class="di"><div class="dd da">◉</div><div><div class="dt">Weekly 15-min check-in call</div><div class="ds">Every week without exception. Progress, blockers, mindset. The accountability engine.</div></div></div>
+        </div>
+        <div>
+          <div class="cl">Nutrition & Support</div>
+          <div class="di"><div class="dd dg">✦</div><div><div class="dt">Full custom macro plan</div><div class="ds">Calculated to their weight, goal and activity level. Protein, carbs, fats — targets they can actually hit.</div></div></div>
+          <div class="di"><div class="dd dg">✦</div><div><div class="dt">Nutrition adjustments as they progress</div><div class="ds">Macros updated when weight changes or goals shift. Not a rigid plan that doesn't move.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">WhatsApp — same day or next day</div><div class="ds">Questions answered, form videos reviewed, wins acknowledged. Faster than most coaches promise.</div></div></div>
+          <div class="di"><div class="dd da">◉</div><div><div class="dt">Mindset & habit coaching</div><div class="ds">Baked into every call. You know what it feels like to want to quit — that's why this matters.</div></div></div>
+        </div>
+      </div>
+      <hr class="div">
+      <div class="cl">Bonuses — built once, reused with every client</div>
+      <div class="pills">
+        <span class="pill pa">Grocery & high-protein meal prep guide</span>
+        <span class="pill pa">Supplement guide</span>
+        <span class="pill pa">Gym confidence starter guide</span>
+        <span class="pill pa">Progress tracking spreadsheet</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="guar">
+    <div class="guar-lbl">The guarantee — Hormozi's risk reversal</div>
+    <p>"Follow the program for 12 weeks. If you don't look and feel noticeably different, I'll coach you for free until you do."</p>
+    <small>This removes all risk from the buyer. If your coaching works it costs you nothing. And it will work.</small>
+  </div>
+
+  <div class="tb" style="margin-bottom:12px">
+    <div class="tb-lbl">Your time cost per Foundation client per week</div>
+    <div class="tr"><span class="tt">Weekly 15-min check-in call (incl. prep)</span><span class="tv">20 min</span></div>
+    <div class="tr"><span class="tt">Form check screen shares (up to 2)</span><span class="tv">30 min</span></div>
+    <div class="tr"><span class="tt">Weekly program adjustments</span><span class="tv">15 min</span></div>
+    <div class="tr"><span class="tt">WhatsApp + nutrition tweaks</span><span class="tv">15 min</span></div>
+    <div class="tr"><span class="tt">Progress tracking + notes</span><span class="tv">10 min</span></div>
+    <div class="tb-total"><span class="tb-tl">Total per client per week</span><span class="tb-tv" style="color:var(--orange2)">~90 min</span></div>
+  </div>
+  <p style="font-size:12px;color:var(--dim);margin-bottom:12px">Plus a one-off 3–4 hrs upfront per new client to write the initial program, build macros, onboard, and send bonus materials.</p>
+</div>
+
+<!-- ═══════════════════ MONTHLY ═══════════════════ -->
+<div class="panel" data-panel="monthly">
+  <div class="ph">
+    <div class="ey">Section 03 — Foundation</div>
+    <h2>Monthly Ongoing Coaching</h2>
+    <p>For Foundation Program graduates. Lighter touch, recurring revenue, and your most efficient offer per hour.</p>
+  </div>
+
+  <div class="ob" style="border-color:rgba(155,127,240,0.3)">
+    <div class="ob-top">
+      <div>
+        <div class="ob-tag" style="background:rgba(155,127,240,0.12);color:var(--purple)">Retention offer</div>
+        <div class="ob-name">Monthly Coaching</div>
+        <div class="ob-sub">Rolling monthly · fresh program each month · cancel anytime</div>
+      </div>
+      <div>
+        <div class="ob-price" style="color:var(--purple)">$350</div>
+        <div class="ob-plabel">AUD · per month</div>
+      </div>
+    </div>
+    <div class="ob-body">
+      <div class="two">
+        <div>
+          <div class="cl">What they get each month</div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">New monthly training program</div><div class="ds">Fresh block every month. New exercises, new rep ranges, continued progressive overload. Never a repeat of last month.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Weekly check-in message</div><div class="ds">You message every Monday. How's training? How's eating? Any blockers? They reply, you give feedback or adjustments.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Macro adjustments as needed</div><div class="ds">If weight stalls or goals shift, macros get updated. Not a rigid static plan.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">WhatsApp — same day or next day</div><div class="ds">Same response commitment as the Foundation Program.</div></div></div>
+        </div>
+        <div>
+          <div class="cl">What's removed vs the program</div>
+          <div class="card" style="margin:0">
+            <p><strong>Not included:</strong></p>
+            <ul style="margin-top:6px">
+              <li>No weekly 15-min calls</li>
+              <li>No form check screen shares (add-on +$60/mo)</li>
+              <li>No weekly program updates — monthly only</li>
+            </ul>
+          </div>
+          <div class="card" style="margin:10px 0 0">
+            <p>By month 3 your client knows how to train. They have the habit. They need a fresh program and someone who notices if they're slipping. That's this.</p>
+          </div>
+        </div>
+      </div>
+      <hr class="div">
+      <div class="cl">Optional add-ons</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+        <div class="card" style="margin:0;flex:1;min-width:150px;padding:13px 15px">
+          <div style="font-size:11px;font-weight:600;color:var(--orange2);margin-bottom:3px">Form check pack</div>
+          <div style="font-size:12px;color:var(--muted)">4 screen share reviews/month</div>
+          <div style="font-size:14px;font-weight:600;margin-top:5px">+$60/month</div>
+        </div>
+        <div class="card" style="margin:0;flex:1;min-width:150px;padding:13px 15px">
+          <div style="font-size:11px;font-weight:600;color:var(--orange2);margin-bottom:3px">Monthly call</div>
+          <div style="font-size:12px;color:var(--muted)">30-min progress strategy call</div>
+          <div style="font-size:14px;font-weight:600;margin-top:5px">+$50/month</div>
+        </div>
+        <div class="card" style="margin:0;flex:1;min-width:150px;padding:13px 15px">
+          <div style="font-size:11px;font-weight:600;color:var(--orange2);margin-bottom:3px">Nutrition deep-dive</div>
+          <div style="font-size:12px;color:var(--muted)">Full macro recalc + new strategy</div>
+          <div style="font-size:14px;font-weight:600;margin-top:5px">+$40 one-off</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tb" style="margin-bottom:12px">
+    <div class="tb-lbl">Your time cost per ongoing client per week</div>
+    <div class="tr"><span class="tt">Weekly check-in message + read reply</span><span class="tv">10 min</span></div>
+    <div class="tr"><span class="tt">WhatsApp responses</span><span class="tv">8 min</span></div>
+    <div class="tr"><span class="tt">Mid-month program adjustments</span><span class="tv">7 min</span></div>
+    <div class="tr"><span class="tt">Monthly program write (amortised)</span><span class="tv">20 min</span></div>
+    <div class="tb-total"><span class="tb-tl">Total per client per week</span><span class="tb-tv" style="color:var(--purple)">~45 min</span></div>
+  </div>
+
+  <div class="card-o">
+    <h3>How to convert Foundation clients — timing matters</h3>
+    <p>Don't wait until week 12. Around week 8–9 when results are kicking in, say this on your call:</p>
+    <div class="hl">"You've made incredible progress. I don't want to see you plateau after everything you've put in. I do ongoing coaching at $350/month — want me to show you what month 4 looks like?"</div>
+    <p>The window is weeks 8–10. After week 12 they feel psychologically "done." Hit it early.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ PREMIUM 1:1 ═══════════════════ -->
+<div class="panel" data-panel="premium">
+  <div class="ph">
+    <div class="ey">Section 04 — Foundation</div>
+    <h2>Premium 1:1 Coaching</h2>
+    <p>In-person sessions at the gym + full online support between sessions. Three tiers based on weekly frequency. Your highest-price, highest-touch offer.</p>
+  </div>
+
+  <!-- TIER 1 -->
+  <div class="ob" style="border-color:rgba(46,199,122,0.3);margin-bottom:18px">
+    <div class="ob-top">
+      <div>
+        <div class="ob-tag" style="background:rgba(46,199,122,0.1);color:var(--green)">Tier 1 — entry premium</div>
+        <div class="ob-name" style="font-size:24px">1x per week in-person</div>
+        <div class="ob-sub">4 sessions/month · full online support included</div>
+      </div>
+      <div>
+        <div class="ob-price" style="color:var(--green);font-size:40px">$950</div>
+        <div class="ob-plabel">AUD · per month</div>
+      </div>
+    </div>
+    <div class="ob-body">
+      <div class="two">
+        <div>
+          <div class="cl">In-person (4x/month)</div>
+          <div class="di"><div class="dd dg">✦</div><div><div class="dt">60-min session at the gym</div><div class="ds">Live technique coaching, real-time cues, hands-on form correction. The feedback impossible to replicate online.</div></div></div>
+          <div class="di"><div class="dd dg">✦</div><div><div class="dt">Custom session programming</div><div class="ds">Each session planned around their current block and recovery.</div></div></div>
+        </div>
+        <div>
+          <div class="cl">Online between sessions</div>
+          <div class="di"><div class="dd da">◉</div><div><div class="dt">Full program for non-session days</div><div class="ds">They train 3–5 days/week. You write the full week, not just the session day.</div></div></div>
+          <div class="di"><div class="dd da">◉</div><div><div class="dt">Custom macro plan + adjustments</div><div class="ds">Full nutrition updated as they progress.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Same-day WhatsApp — priority</div><div class="ds">They jump the queue. First response every day.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Weekly 15-min check-in call</div><div class="ds">On top of the session. Mindset, nutrition, progress review.</div></div></div>
+        </div>
+      </div>
+      <div class="tb">
+        <div class="tb-lbl">Time cost per week — Tier 1</div>
+        <div class="tr"><span class="tt">In-person session + travel/setup</span><span class="tv">75 min</span></div>
+        <div class="tr"><span class="tt">Weekly check-in call</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">Program writing + updates</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">WhatsApp + nutrition</span><span class="tv">20 min</span></div>
+        <div class="tb-total"><span class="tb-tl">Total per client per week</span><span class="tb-tv" style="color:var(--green)">~2.25 hrs</span></div>
+      </div>
+      <div class="mb">Revenue: $950/mo · Gym hire 4 sessions @~$25/hr = <strong>~$100 cost</strong> · Net: <strong style="color:var(--green)">~$850/month</strong> · Rate: <strong style="color:var(--green)">~$94/hr</strong></div>
+    </div>
+  </div>
+
+  <!-- TIER 2 -->
+  <div class="ob" style="border-color:rgba(240,160,74,0.35);margin-bottom:18px">
+    <div class="ob-top">
+      <div>
+        <div class="ob-tag" style="background:rgba(240,160,74,0.12);color:var(--orange2)">Tier 2 — most popular</div>
+        <div class="ob-name" style="font-size:24px">2x per week in-person</div>
+        <div class="ob-sub">8 sessions/month · full online support included</div>
+      </div>
+      <div>
+        <div class="ob-price" style="color:var(--orange2);font-size:40px">$1,430</div>
+        <div class="ob-plabel">AUD · per month</div>
+      </div>
+    </div>
+    <div class="ob-body">
+      <div class="two">
+        <div>
+          <div class="cl">In-person (8x/month)</div>
+          <div class="di"><div class="dd da">✦</div><div><div class="dt">2 × 60-min sessions per week</div><div class="ds">The sweet spot. Push/pull or upper/lower split. Enough in-person time for real progress without consuming your whole schedule.</div></div></div>
+          <div class="di"><div class="dd da">✦</div><div><div class="dt">Session-by-session programming</div><div class="ds">Each session adjusted based on what happened last time.</div></div></div>
+        </div>
+        <div>
+          <div class="cl">Online between sessions</div>
+          <div class="di"><div class="dd da">◉</div><div><div class="dt">Full week program (non-session days)</div><div class="ds">Remaining days programmed and updated weekly.</div></div></div>
+          <div class="di"><div class="dd da">◉</div><div><div class="dt">Custom macro plan + weekly adjustments</div><div class="ds">Nutrition moves with their training, not static.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Same-day WhatsApp — priority</div><div class="ds">First response every day. No waiting.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Weekly 15-min check-in call</div><div class="ds">On top of sessions. Structured weekly review.</div></div></div>
+        </div>
+      </div>
+      <div class="tb">
+        <div class="tb-lbl">Time cost per week — Tier 2</div>
+        <div class="tr"><span class="tt">2 × in-person sessions + setup each</span><span class="tv">150 min</span></div>
+        <div class="tr"><span class="tt">Weekly check-in call</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">Program writing + updates</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">WhatsApp + nutrition</span><span class="tv">20 min</span></div>
+        <div class="tb-total"><span class="tb-tl">Total per client per week</span><span class="tb-tv" style="color:var(--orange2)">~3.5 hrs</span></div>
+      </div>
+      <div class="mb">Revenue: $1,430/mo · Gym hire 8 sessions @~$25/hr = <strong>~$200 cost</strong> · Net: <strong style="color:var(--orange2)">~$1,230/month</strong> · Rate: <strong style="color:var(--orange2)">~$88/hr</strong></div>
+    </div>
+  </div>
+
+  <!-- TIER 3 -->
+  <div class="ob" style="border-color:rgba(155,127,240,0.35);margin-bottom:18px">
+    <div class="ob-top">
+      <div>
+        <div class="ob-tag" style="background:rgba(155,127,240,0.12);color:var(--purple)">Tier 3 — elite</div>
+        <div class="ob-name" style="font-size:24px">3x per week in-person</div>
+        <div class="ob-sub">12 sessions/month · maximum coach involvement</div>
+      </div>
+      <div>
+        <div class="ob-price" style="color:var(--purple);font-size:40px">$1,910</div>
+        <div class="ob-plabel">AUD · per month</div>
+      </div>
+    </div>
+    <div class="ob-body">
+      <div class="two">
+        <div>
+          <div class="cl">In-person (12x/month)</div>
+          <div class="di"><div class="dd dp">✦</div><div><div class="dt">3 × 60-min sessions per week</div><div class="ds">Full push/pull/legs or upper/lower/full split. For the client who is fully committed and wants maximum presence.</div></div></div>
+        </div>
+        <div>
+          <div class="cl">Online support</div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Everything from Tier 2</div><div class="ds">Full program, macros, weekly call, same-day priority WhatsApp.</div></div></div>
+          <div class="di"><div class="dd dp">◈</div><div><div class="dt">Monthly written progress report</div><div class="ds">Formal review: measurements, lifts, photos, next month's direction. Makes them feel like a serious athlete.</div></div></div>
+        </div>
+      </div>
+      <div class="tb">
+        <div class="tb-lbl">Time cost per week — Tier 3</div>
+        <div class="tr"><span class="tt">3 × in-person sessions + setup each</span><span class="tv">225 min</span></div>
+        <div class="tr"><span class="tt">Weekly check-in call</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">Program writing + updates</span><span class="tv">15 min</span></div>
+        <div class="tr"><span class="tt">WhatsApp + nutrition</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">Monthly report (amortised weekly)</span><span class="tv">15 min</span></div>
+        <div class="tb-total"><span class="tb-tl">Total per client per week</span><span class="tb-tv" style="color:var(--purple)">~4.9 hrs</span></div>
+      </div>
+      <div class="mb">Revenue: $1,910/mo · Gym hire 12 sessions @~$25/hr = <strong>~$300 cost</strong> · Net: <strong style="color:var(--purple)">~$1,610/month</strong> · Max 2 Tier 3 clients at 10–15 hrs/week</div>
+    </div>
+  </div>
+
+  <div class="card-r">
+    <h3>⚠ Nail your gym hire cost before you sell a single session</h3>
+    <p>All margins assume ~$25/hr gym hire. If it's $40/hr your numbers change. Negotiate a flat monthly rate — it improves as you scale. Confirm this before launch.</p>
+  </div>
+
+  <div class="card-g">
+    <h3>The smart way to use this tier</h3>
+    <p>Don't lead with Premium 1:1. Lead with the Foundation Program. Once a client finishes and has results, offer the upgrade. They already trust you — the upsell is easy. At 10–15 hrs/week run 2 Tier 2 clients alongside 4–5 online clients. That adds ~$2,794/month net.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ STANDARD 1:1 ═══════════════════ -->
+<div class="panel" data-panel="standard">
+  <div class="ph">
+    <div class="ey">Section 05 — Foundation</div>
+    <h2>Standard 1:1 Sessions</h2>
+    <p>Pay-as-you-go in-person coaching. No commitment, no program package. For clients who want flexibility or aren't ready to commit to a full program yet.</p>
+  </div>
+
+  <div class="ob" style="border-color:rgba(74,158,255,0.3)">
+    <div class="ob-top">
+      <div>
+        <div class="ob-tag" style="background:rgba(74,158,255,0.1);color:var(--blue)">Flexible offer</div>
+        <div class="ob-name">Standard 1:1 Session</div>
+        <div class="ob-sub">60 minutes · in-person at the gym · book as needed</div>
+      </div>
+      <div>
+        <div class="ob-price" style="color:var(--blue)">$120</div>
+        <div class="ob-plabel">AUD · per session</div>
+      </div>
+    </div>
+    <div class="ob-body">
+      <div class="two">
+        <div>
+          <div class="cl">What's in the session</div>
+          <div class="di"><div class="dd db">✦</div><div><div class="dt">60-min in-person training session</div><div class="ds">Full session at the gym. You coach every set, cue every rep, correct form in real time.</div></div></div>
+          <div class="di"><div class="dd db">✦</div><div><div class="dt">Session program written in advance</div><div class="ds">You turn up with a plan built around their goals and what they've done previously — not winging it on the day.</div></div></div>
+          <div class="di"><div class="dd db">✦</div><div><div class="dt">Post-session notes sent via WhatsApp</div><div class="ds">Key cues to remember, what to focus on next session, any form fixes to practise. Takes 5 minutes and makes you look extremely professional.</div></div></div>
+        </div>
+        <div>
+          <div class="cl">What's not included</div>
+          <div class="card" style="margin:0">
+            <p><strong>Not part of the $120:</strong></p>
+            <ul style="margin-top:6px">
+              <li>No custom nutrition plan</li>
+              <li>No between-session WhatsApp access</li>
+              <li>No weekly check-in calls</li>
+              <li>No program for non-session days</li>
+            </ul>
+            <p style="margin-top:8px">These are available — they just move the client into the Foundation Program or ongoing coaching. The standard session is the entry point, not the destination.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tb">
+        <div class="tb-lbl">Your time cost per standard session</div>
+        <div class="tr"><span class="tt">Session planning + program write</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">In-person session</span><span class="tv">60 min</span></div>
+        <div class="tr"><span class="tt">Travel to/from gym + setup</span><span class="tv">20 min</span></div>
+        <div class="tr"><span class="tt">Post-session notes via WhatsApp</span><span class="tv">5 min</span></div>
+        <div class="tb-total"><span class="tb-tl">Total time per session</span><span class="tb-tv" style="color:var(--blue)">~105 min</span></div>
+      </div>
+      <div class="mb">Revenue: $120 · Gym hire @~$25 = <strong>~$25 cost</strong> · Net: <strong style="color:var(--blue)">~$95 per session</strong> · Effective rate: <strong style="color:var(--blue)">~$54/hr</strong></div>
+    </div>
+  </div>
+
+  <div class="card-o">
+    <h3>Why this offer exists — it's a funnel, not a destination</h3>
+    <p>The Standard 1:1 is your lowest-friction entry point. Someone who isn't ready to commit $997 upfront can say yes to a single $120 session. Once they experience your coaching in person — your knowledge, your attention, your ability to explain what they've been doing wrong — most will want more.</p>
+    <p style="margin-top:8px">After session 2 or 3, say this:</p>
+    <div class="hl">"You're making good progress. Honestly the fastest way to get where you want to be is a structured 12-week program rather than individual sessions — it's more consistent, you get nutrition coaching, and it works out better value. Want me to walk you through how it works?"</div>
+    <p>That's your upsell into the Foundation Program. No pressure — just a logical next step for someone who already trusts you.</p>
+  </div>
+
+  <div class="card">
+    <h3>Session packs — reduce friction, increase commitment</h3>
+    <p>Offer a 5-session pack at a slight discount to get clients booking ahead and reduce no-shows. Single session pricing vs pack:</p>
+    <div class="tw" style="margin-top:12px">
+      <table>
+        <tr><th>Option</th><th>Price</th><th>Per session</th><th>Benefit</th></tr>
+        <tr><td>Single session</td><td><strong>$120</strong></td><td class="mn">$120</td><td>No commitment needed</td></tr>
+        <tr><td>5-session pack</td><td><strong>$550</strong></td><td class="mn cg">$110 (save $50)</td><td>Better value, booked ahead</td></tr>
+        <tr><td>10-session pack</td><td><strong>$1,050</strong></td><td class="mn cg">$105 (save $150)</td><td>Max commitment, predictable revenue</td></tr>
+      </table>
+    </div>
+    <p style="margin-top:10px">Packs paid upfront. This improves your cash flow and means clients who've already paid are far more likely to show up. A client who's pre-paid for 10 sessions doesn't cancel on a rainy Tuesday.</p>
+  </div>
+
+  <div class="card">
+    <h3>How the standard 1:1 fits your full offer stack</h3>
+    <div class="tw" style="margin-top:12px">
+      <table>
+        <tr><th>Offer</th><th>Price</th><th>Role in your business</th></tr>
+        <tr><td>Standard 1:1 session</td><td class="mn">$120/session</td><td>Entry point — try before they commit</td></tr>
+        <tr><td>5-session pack</td><td class="mn">$550</td><td>Short-term commitment, bridge to program</td></tr>
+        <tr><td>Foundation Program</td><td class="mn">$997 upfront</td><td>Core offer — full transformation</td></tr>
+        <tr><td>Monthly ongoing</td><td class="mn">$350/mo</td><td>Retention — keeps graduates progressing</td></tr>
+        <tr><td>Premium 1:1 Tier 2</td><td class="mn">$1,430/mo</td><td>High-touch — in-person + full online stack</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-g">
+    <h3>The honest trade-off</h3>
+    <p>At $54/hr effective the Standard 1:1 is your least efficient offer per hour. It's worth running because it converts — but be intentional. Cap standard sessions at 3–4 per week maximum so they don't crowd out your more efficient online clients. Time spent on a $120 session is time not spent on a $350/month ongoing client.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ PRICING ═══════════════════ -->
+<div class="panel" data-panel="pricing">
+  <div class="ph">
+    <div class="ey">Section 05 — Foundation</div>
+    <h2>Pricing & Revenue</h2>
+    <p>Hormozi's rule: low prices attract bad clients. Price reflects the value of the result, not the cost of your time.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n" style="color:var(--orange2)">$997</div><div class="stat-l">12-week Foundation Program</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--purple)">$350</div><div class="stat-l">Monthly ongoing coaching</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--orange2)">$1,430</div><div class="stat-l">Premium 1:1 Tier 2/month</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Why $997 and not $500?</h3>
+    <p>The person who pays $997 is committed. He shows up, does the work, gets results — and that becomes your testimonial. At $997 you only need <strong>5 clients</strong> to hit $5,000 revenue. Achievable in your first 60 days.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Product</th><th>Price (AUD)</th><th>Who it's for</th></tr>
+      <tr><td>Standard 1:1 session</td><td><strong>$120/session</strong></td><td>Pay-as-you-go in-person entry point</td></tr>
+      <tr><td>5-session pack</td><td><strong>$550</strong></td><td>Pre-paid, builds commitment</td></tr>
+      <tr><td>12-week Foundation Program</td><td><strong>$997</strong></td><td>First-time clients — your core offer</td></tr>
+      <tr><td>Monthly ongoing coaching</td><td><strong>$350/mo</strong></td><td>Graduates who want to keep progressing</td></tr>
+      <tr><td>Premium 1:1 — Tier 1 (1x/week)</td><td><strong>$950/mo</strong></td><td>In-person entry, full online support</td></tr>
+      <tr><td>Premium 1:1 — Tier 2 (2x/week)</td><td><strong>$1,430/mo</strong></td><td>Most popular in-person tier</td></tr>
+      <tr><td>Premium 1:1 — Tier 3 (3x/week)</td><td><strong>$1,910/mo</strong></td><td>Maximum coaching involvement</td></tr>
+      <tr><td>Self-paced program (future)</td><td><strong>$97–197</strong></td><td>Entry-level, builds your email list</td></tr>
+    </table>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Period</th><th>Clients</th><th>Revenue (AUD)</th><th>How</th></tr>
+      <tr><td>Month 1–2</td><td>3</td><td><strong>~$3,000</strong></td><td>Warm outreach only</td></tr>
+      <tr><td>Month 3–4</td><td>5</td><td><strong>~$5,000</strong></td><td>Outreach + content starting</td></tr>
+      <tr><td>Month 6</td><td>7–8</td><td><strong>$5,500–6,500</strong></td><td>New + retained ongoing</td></tr>
+      <tr><td>Month 12</td><td>12–15</td><td><strong>$7,000–10,000</strong></td><td>Content flywheel + referrals</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Payment structure — always collect upfront</h3>
+    <p>Two options: pay in full ($997) or two payments of $549 ($101 premium for the split). Never monthly for the program — it kills cash flow and increases dropout. Hormozi: upfront payment changes client commitment. They've invested. They show up.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ ACQUIRE ═══════════════════ -->
+<div class="panel" data-panel="acquire">
+  <div class="ph">
+    <div class="ey">Section 06 — Growth</div>
+    <h2>Getting Clients</h2>
+    <p>Hormozi's first dollar came from a personal conversation — not an ad, not a post. Your first 3 clients are already in your phone right now.</p>
+  </div>
+
+  <div class="card-o">
+    <h3>Phase 1 — warm outreach (weeks 1–4, zero cost)</h3>
+    <p>People who've commented on your fitness posts. Mates who've asked how you lost the weight. Anyone who's ever said "you should train me." Goal: message 30 people, convert 3. That's 10% — very achievable with a personal message.</p>
+  </div>
+
+  <div class="msg" id="outreach-msg">Hey [Name], launching my online coaching and taking on a small group of first clients for my 12-week program.
+
+Thought of you specifically because [personal reason — e.g. "you mentioned wanting to sort your training", "I know you've been trying to lose weight"].
+
+I coach young guys on strength training and nutrition — I went from being overweight myself to where I am now, and that's exactly what I build programs around.
+
+Taking on only 5 people for this first round to keep it personal. Want me to send through the details?</div>
+  <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('outreach-msg').innerText).then(()=>{this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy message',2000)})">Copy message</button>
+
+  <div class="card">
+    <h3>Why this message works</h3>
+    <ul>
+      <li>You're not asking for money — just "do you want details?" Low friction yes</li>
+      <li>The specific personal reason makes it feel genuine, not a mass pitch</li>
+      <li>"Only 5 people" creates urgency without being salesy</li>
+      <li>Your story is the credibility — no need to list qualifications</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Phase 2 — referral system (month 2 onward)</h3>
+    <p>When a client hits a milestone — a PR, visible progress, real confidence — that's the moment to ask:</p>
+    <div class="hl">"Mate, I'm really stoked with how you're going. If you know anyone who'd benefit from this, I'd love an intro — I'll give you a free month for any referral who signs up."</div>
+    <p>One happy client who refers two people has covered your marketing cost indefinitely.</p>
+  </div>
+
+  <div class="card">
+    <h3>Phase 3 — inbound via content (month 3+)</h3>
+    <p>Consistent content + a clear offer = inbound DMs. The goal is that within 90 days people are coming to you instead of you chasing them. See the Content Strategy section for the exact system.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ SALES ═══════════════════ -->
+<div class="panel" data-panel="sales">
+  <div class="ph">
+    <div class="ey">Section 07 — Growth</div>
+    <h2>Sales & Closing</h2>
+    <p>The CLOSER framework from Hormozi. Not manipulation — a structure that helps people make a decision that's actually good for them.</p>
+  </div>
+
+  <div class="card">
+    <h3>When someone DMs — get them on a call first</h3>
+    <p>Don't send a PDF. Send: <em>"Awesome — I want to make sure this is the right fit for you. Can we jump on a quick 20-min call this week?"</em> The call is where you close. Everything before that is warm-up.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--orange);width:24px;flex-shrink:0;line-height:1">C</div>
+      <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Clarify — why are they on the call?</div><div style="font-size:12.5px;color:var(--muted);line-height:1.65">"What made you reach out?" Let them talk. Don't pitch yet. The more they talk the more you understand what they actually need.</div></div>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--orange);width:24px;flex-shrink:0;line-height:1">L</div>
+      <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Label — name their problem back to them</div><div style="font-size:12.5px;color:var(--muted);line-height:1.65">"So it sounds like you've tried the gym before but never had a real structure and kept losing motivation — is that right?" When they hear their problem reflected back, they feel understood. That's trust.</div></div>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--orange);width:24px;flex-shrink:0;line-height:1">O</div>
+      <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Overview past failures without judgment</div><div style="font-size:12.5px;color:var(--muted);line-height:1.65">"What have you tried before? What stopped you?" Make them feel safe to be honest. This surfaces real objections before they become blockers at the end.</div></div>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--orange);width:24px;flex-shrink:0;line-height:1">S</div>
+      <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Sell the vacation, not the plane</div><div style="font-size:12.5px;color:var(--muted);line-height:1.65">Describe the result, not the program. Don't say "you get weekly check-ins." Say "in 12 weeks you'll walk into a room differently. You'll have the confidence you've been waiting to have."</div></div>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--orange);width:24px;flex-shrink:0;line-height:1">E</div>
+      <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Explain — what's included, handle objections</div><div style="font-size:12.5px;color:var(--muted);line-height:1.65">Walk through the offer and guarantee. For price objections: "You've spent years trying free stuff that didn't work. What does another year of the same look like?"</div></div>
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;padding:10px 0">
+      <div style="font-family:'Bebas Neue';font-size:28px;color:var(--orange);width:24px;flex-shrink:0;line-height:1">R</div>
+      <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Reinforce after they say yes</div><div style="font-size:12.5px;color:var(--muted);line-height:1.65">"You've made a great call. This is exactly the right time to do this." People second-guess purchases. Immediate reinforcement kills buyer's remorse before it starts.</div></div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Objection</th><th>Response</th></tr>
+      <tr><td>"It's too expensive"</td><td>"What's it costing you to stay where you are? Not just financially — in how you show up every day."</td></tr>
+      <tr><td>"I need to think about it"</td><td>"What's the specific thing holding you back? Let's talk through it now."</td></tr>
+      <tr><td>"I'll try it myself first"</td><td>"You've probably already tried that. What would be different this time?"</td></tr>
+      <tr><td>"Does online coaching actually work?"</td><td>"The check-ins and form videos often create more accountability than a PT you see twice a week."</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONTENT ═══════════════════ -->
+<div class="panel" data-panel="content">
+  <div class="ph">
+    <div class="ey">Section 08 — Growth</div>
+    <h2>Content Strategy</h2>
+    <p>One platform. Four posts a week. Two hours total. Go deep on Instagram Reels or TikTok first — don't spread thin across three platforms.</p>
+  </div>
+
+  <div class="tw" style="margin-bottom:16px">
+    <table>
+      <tr><th>Pillar</th><th>What it looks like</th><th>Why it works</th></tr>
+      <tr><td><span class="pill po" style="font-size:10px">Your story</span></td><td>Before/after, what changed, mindset shifts, raw honesty</td><td>Your avatar sees himself in you. Builds deep trust.</td></tr>
+      <tr><td><span class="pill pb" style="font-size:10px">Education</span></td><td>Common mistakes, training tips, nutrition myths debunked</td><td>Positions you as the expert. Builds followers.</td></tr>
+      <tr><td><span class="pill pg" style="font-size:10px">Client results</span></td><td>PRs hit, progress posts, client wins (with permission)</td><td>Social proof — makes the outcome feel achievable.</td></tr>
+      <tr><td><span class="pill pa" style="font-size:10px">Direct offer</span></td><td>1x per week — "spots open, DM me STRONG"</td><td>Converts viewers to leads. Do this every week.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Weekly schedule — ~2 hours total</h3>
+    <div style="margin-top:10px">
+      <div class="cd">
+        <div class="cd-day">MON</div>
+        <div class="cd-body"><div class="cd-type" style="color:var(--blue)">Education</div><div class="cd-desc">A training tip, common mistake, or myth bust. Punchy and specific.</div><div class="cd-time">~35 min</div></div>
+      </div>
+      <div class="cd">
+        <div class="cd-day">WED</div>
+        <div class="cd-body"><div class="cd-type" style="color:var(--orange)">Your story</div><div class="cd-desc">Something personal — a low moment, a realisation, what actually changed.</div><div class="cd-time">~25 min</div></div>
+      </div>
+      <div class="cd">
+        <div class="cd-day">FRI</div>
+        <div class="cd-body"><div class="cd-type" style="color:var(--green)">Client result</div><div class="cd-desc">A win, a PR, a before/after. Let the results speak.</div><div class="cd-time">~20 min</div></div>
+      </div>
+      <div class="cd">
+        <div class="cd-day">SUN</div>
+        <div class="cd-body"><div class="cd-type" style="color:var(--orange2)">Soft sell</div><div class="cd-desc">"Taking on X clients this month. DM me STRONG for details." Every single week.</div><div class="cd-time">~15 min</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Hooks that stop the scroll</h3>
+    <ul>
+      <li>"I was overweight for years. Here's the one thing that actually changed everything."</li>
+      <li>"Why every guy who starts the gym quits within 8 weeks (and how to not be him)"</li>
+      <li>"The 3 things I wish someone told me when I started lifting"</li>
+      <li>"You don't have a motivation problem. You have a clarity problem."</li>
+      <li>"Stop doing this in the gym if you actually want to build muscle"</li>
+    </ul>
+  </div>
+
+  <div class="card-o">
+    <h3>Your CTA — use it on every single post</h3>
+    <p style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px">"DM me 'STRONG' if you want details on my 12-week program"</p>
+    <p>Pick one CTA and use it every time. Repetition trains your audience on what to do. People who DM are pre-sold — the content already did the work.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ ROADMAP ═══════════════════ -->
+<div class="panel" data-panel="roadmap">
+  <div class="ph">
+    <div class="ey">Section 09 — Execution</div>
+    <h2>12-Month Roadmap</h2>
+    <p>Built around 10–15 hours per week. Realistic targets. Clear actions. No fluff.</p>
+  </div>
+
+  <div class="rm">
+    <div class="rm-left">
+      <div class="rm-badge" style="background:rgba(46,199,122,0.1);color:var(--green)">M 1–2</div>
+      <div class="rm-rev">$2–3K<br>target</div>
+    </div>
+    <div>
+      <div class="rm-title">Foundation — build it, launch it, get paid</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Write your offer one-pager in Canva (1 page, clean, simple)</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Set up Stripe payment link — takes 20 minutes</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Set up Google Sheets for program delivery</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Send warm outreach to 30 people in your network</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Land first 3 paying clients</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Start posting 4x per week on Instagram or TikTok</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Build your bonus materials (done once, reused forever)</div>
+    </div>
+  </div>
+
+  <div class="rm">
+    <div class="rm-left">
+      <div class="rm-badge" style="background:rgba(155,127,240,0.1);color:var(--purple)">M 3–4</div>
+      <div class="rm-rev">$4–5K<br>target</div>
+    </div>
+    <div>
+      <div class="rm-title">Proof — get results, get testimonials, get referrals</div>
+      <div class="rm-item"><span class="rm-check">✓</span>First clients hitting milestones — document everything</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Ask every happy client for one referral at their peak moment</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Post first real before/after with client permission</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Grow to 5–6 active clients</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Convert graduating clients to $350/month ongoing</div>
+    </div>
+  </div>
+
+  <div class="rm">
+    <div class="rm-left">
+      <div class="rm-badge" style="background:rgba(240,160,74,0.1);color:var(--orange2)">M 5–8</div>
+      <div class="rm-rev">$5–7K<br>target</div>
+    </div>
+    <div>
+      <div class="rm-title">Momentum — content starts working, inbound begins</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Content flywheel building — inbound DMs increasing</div>
+      <div class="rm-item"><span class="rm-check">✓</span>8–10 active clients across programs and ongoing</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Recurring revenue base of $2,500–3,000/month from retained clients</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Test one paid ad — $15/day boosting your best performing post</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Build a waiting list — creates genuine scarcity</div>
+    </div>
+  </div>
+
+  <div class="rm" style="border:none">
+    <div class="rm-left">
+      <div class="rm-badge" style="background:rgba(74,158,255,0.1);color:var(--blue)">M 9–12</div>
+      <div class="rm-rev">$7–10K<br>target</div>
+    </div>
+    <div>
+      <div class="rm-title">Scale — predictable income, real decisions</div>
+      <div class="rm-item"><span class="rm-check">✓</span>12–15 active clients — a real, functioning business</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Strong recurring base makes income predictable</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Decide: stay solo or introduce group coaching to scale</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Consider leaving current job if numbers support it</div>
+      <div class="rm-item"><span class="rm-check">✓</span>Clear brand, proven system, real testimonials</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOOLS ═══════════════════ -->
+<div class="panel" data-panel="tools">
+  <div class="ph">
+    <div class="ey">Section 10 — Execution</div>
+    <h2>Tools & Systems</h2>
+    <p>Hormozi's rule: complexity kills execution. Get clients first. Build systems around them. Month 1 tool cost: $0.</p>
+  </div>
+
+  <div class="card-o">
+    <h3>Batch your messages — protect your time</h3>
+    <p>You've promised same or next day responses. Set two windows: morning (20 min) and evening (20 min). Tell every client upfront: <em>"I check messages every morning and evening, Monday to Saturday. You'll always hear back same day or next morning."</em> Professional, not slow.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Task</th><th>Start free</th><th>Upgrade when ready</th><th>Cost</th></tr>
+      <tr><td>Program delivery</td><td>Google Sheets + PDF</td><td>TrueCoach</td><td>~$20/mo</td></tr>
+      <tr><td>Form check screen records</td><td>Loom (free tier)</td><td>Loom Pro</td><td>~$15/mo</td></tr>
+      <tr><td>Client messaging</td><td>WhatsApp</td><td>Same</td><td>$0</td></tr>
+      <tr><td>Call scheduling</td><td>Calendly free</td><td>Calendly Standard</td><td>~$12/mo</td></tr>
+      <tr><td>Payment collection</td><td>Stripe</td><td>Same</td><td>1.7% + 30¢</td></tr>
+      <tr><td>Macro calculation</td><td>Cronometer free</td><td>MacroFactor</td><td>~$10/mo</td></tr>
+      <tr><td>Content editing</td><td>CapCut free</td><td>CapCut Pro</td><td>~$10/mo</td></tr>
+      <tr><td>Offer page</td><td>Canva free</td><td>Canva Pro</td><td>~$20/mo</td></tr>
+      <tr><td>Website</td><td>Linktree in bio</td><td>Squarespace or Carrd</td><td>$10–22/mo</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Onboarding — what happens when someone signs up</h3>
+    <ul>
+      <li><strong>Day 1:</strong> Welcome message + intake form (training history, schedule, goals, injuries, food preferences)</li>
+      <li><strong>Day 2–3:</strong> Build their program and macro plan from intake data</li>
+      <li><strong>Day 3–4:</strong> Send program via Google Sheets, walk through on a 20-min onboarding call</li>
+      <li><strong>Day 4:</strong> Send all bonus materials</li>
+      <li><strong>Day 7:</strong> First check-in call — how did week 1 go?</li>
+    </ul>
+    <p style="margin-top:10px">Make it fast and personal. This window is where the client either gets excited and committed — or overwhelmed and disengaged.</p>
+  </div>
+
+  <div class="card-g">
+    <h3>The one metric that matters right now</h3>
+    <p style="font-size:18px;font-weight:600;color:var(--text);margin:6px 0">Number of conversations started this week.</p>
+    <p>Not followers. Not likes. Not how polished your offer looks. Every client you will ever have starts with a conversation. In month 1 your only job is to have as many as possible.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ VISION ═══════════════════ -->
+<div class="panel" data-panel="vision">
+  <div class="ph">
+    <div class="ey">Section 11 — Execution</div>
+    <h2>3-Year Vision</h2>
+    <p>Where this goes if you execute consistently. Not a fantasy — a logical progression built on what works.</p>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <div class="vc y1">
+      <div class="vy" style="color:var(--orange)">Y1</div>
+      <div class="vr">$7,000–10,000/mo AUD</div>
+      <div class="vd">Prove the model. 10–15 clients. Consistent income. Real results and real testimonials. The business is real.</div>
+    </div>
+    <div class="vc y2">
+      <div class="vy" style="color:var(--purple)">Y2</div>
+      <div class="vr">$12,000–20,000/mo AUD</div>
+      <div class="vd">Build the brand. Launch a group coaching program at $397/month with 30–50 members. Stop trading time for money.</div>
+    </div>
+    <div class="vc y3">
+      <div class="vy" style="color:var(--green)">Y3</div>
+      <div class="vr">$20,000–30,000/mo AUD</div>
+      <div class="vd">Own the niche. Recognised brand for young guys transforming their bodies. Self-paced course at $197. Community. Scale.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The progression logic</h3>
+    <ul>
+      <li><strong>Year 1</strong> is about proof. Get case studies, testimonials, and a repeatable system. Do the work, earn the right to scale.</li>
+      <li><strong>Year 2</strong> is about leverage. 40 people in a group program at $397/month = $15,880 recurring — for one program delivery.</li>
+      <li><strong>Year 3</strong> is about brand equity. When content has compounded for 2+ years and results are undeniable, you become the go-to for your niche in Australia.</li>
+    </ul>
+  </div>
+
+  <div class="card-o">
+    <h3>The honest truth about getting there</h3>
+    <p>None of this happens from optimising your offer page or building the perfect funnel. It happens from doing the uncomfortable thing: starting conversations, showing up with content even when no one watches, and delivering results so good that your clients sell for you.</p>
+    <p style="margin-top:8px">Hormozi's whole model is built on one idea — <strong>make the product so good, the marketing takes care of itself.</strong></p>
+    <p style="margin-top:8px">You have the story. You have the skills. You have the niche. The only variable left is execution.</p>
+  </div>
+
+  <div class="hl">"The goal for this week isn't to have a perfect business. The goal is to send 10 messages and have one real conversation. That's it. Everything else is noise."</div>
+</div>
+
+</main>
+
+<script>
+function show(id) {
+  document.querySelectorAll('[data-panel]').forEach(function(p) {
+    p.style.display = 'none';
+    p.classList.remove('active');
+  });
+  document.querySelectorAll('[data-nav]').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  var panel = document.querySelector('[data-panel="' + id + '"]');
+  var btn = document.querySelector('[data-nav="' + id + '"]');
+  if (panel) { panel.style.display = 'block'; panel.classList.add('active'); }
+  if (btn) { btn.classList.add('active'); }
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
