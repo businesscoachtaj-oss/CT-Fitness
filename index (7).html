@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CT Fitness — Coaching Built Around You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:        #0C0D0F;
+            --surface:   #131416;
+            --surface-2: #1A1B1E;
+            --border:    rgba(255,255,255,0.07);
+            --text:      #DDD8CF;
+            --muted:     #6B6660;
+            --accent:    #C09448;
+            --accent-lt: #D4AA64;
+            --white:     #F0EBE1;
+            --px:        clamp(20px, 5vw, 52px);
+            --nav-h:     64px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Barlow', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.025;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 300;
+            height: var(--nav-h);
+            padding: 0 var(--px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(12,13,15,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+            cursor: pointer;
+            user-select: none;
+        }
+        .logo em { color: var(--accent); font-style: normal; }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        .nav-links a {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color .2s;
+            padding: 8px 0;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 1.5px;
+            background: var(--white);
+            transition: transform .3s, opacity .2s;
+            transform-origin: center;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        /* Mobile drawer */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: var(--nav-h) 0 0 0;
+            z-index: 299;
+            background: rgba(12,13,15,0.98);
+            backdrop-filter: blur(20px);
+            padding: 44px var(--px);
+            flex-direction: column;
+            border-top: 1px solid var(--border);
+            overflow-y: auto;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            color: var(--muted);
+            text-decoration: none;
+            cursor: pointer;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color .2s;
+            display: block;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-menu a:first-child { border-top: 1px solid var(--border); }
+        .mobile-menu a:hover, .mobile-menu a.active { color: var(--white); }
+        .mobile-menu a.active::after { content: ' —'; color: var(--accent); }
+
+        /* ── PAGES ── */
+        .page { display: none; min-height: 100vh; padding-top: var(--nav-h); }
+        .page.active { display: block; }
+        .page.fade-in { animation: fadeIn .3s ease both; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        /* ── SHARED ── */
+        .eyebrow {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(38px, 6vw, 72px);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.92;
+            color: var(--white);
+        }
+        .section-body {
+            font-size: clamp(14px, 2vw, 16px);
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.85;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            padding: 16px 32px;
+            min-height: 50px;
+            transition: all .2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-gold { background: var(--accent); color: var(--bg); }
+        .btn-gold:hover { background: var(--accent-lt); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--muted); color: var(--white); }
+
+        .page-header {
+            padding: clamp(48px, 8vw, 80px) var(--px) clamp(36px, 5vw, 60px);
+            border-bottom: 1px solid var(--border);
+        }
+        .page-header h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(56px, 10vw, 120px);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.88;
+            color: var(--white);
+        }
+        .page-header p {
+            font-size: clamp(14px, 2vw, 16px);
+            font-weight: 300;
+            color: var(--muted);
+            max-width: 460px;
+            margin-top: 18px;
+            line-height: 1.75;
+        }
+
+        footer {
+            padding: clamp(28px, 4vw, 44px) var(--px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-logo {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+        }
+        .footer-logo em { color: var(--accent); font-style: normal; }
+        .footer-copy { font-size: 12px; color: var(--muted); }
+
+        /* ── HOME ── */
+        .hero {
+            min-height: calc(100svh - var(--nav-h));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(48px, 8vw, 96px) var(--px);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-tag {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(68px, 13vw, 168px);
+            font-weight: 900;
+            line-height: 0.87;
+            text-transform: uppercase;
+            color: var(--white);
+            letter-spacing: -0.015em;
+            max-width: 1000px;
+        }
+        .hero h1 em { font-style: italic; color: var(--accent); }
+        .hero-sub {
+            margin-top: clamp(24px, 4vw, 44px);
+            font-size: clamp(14px, 2vw, 17px);
+            font-weight: 300;
+            color: var(--muted);
+            max-width: 420px;
+            line-height: 1.8;
+        }
+        .hero-actions {
+            margin-top: clamp(28px, 4vw, 48px);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .hero-accent-line {
+            position: absolute;
+            right: var(--px);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero-accent-line span {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            writing-mode: vertical-rl;
+        }
+        .hero-accent-line::before, .hero-accent-line::after {
+            content: '';
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, var(--accent));
+            opacity: 0.5;
+        }
+        .hero-accent-line::after { background: linear-gradient(to top, transparent, var(--accent)); }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .stat {
+            padding: clamp(24px, 4vw, 44px) var(--px);
+            border-right: 1px solid var(--border);
+        }
+        .stat:last-child { border-right: none; }
+        .stat-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(32px, 5vw, 58px);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--white);
+        }
+        .stat-num em { color: var(--accent); font-style: normal; }
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(40px, 8vw, 96px);
+            align-items: start;
+            padding: clamp(56px, 9vw, 112px) var(--px);
+        }
+        .pillar {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .pillar:first-child { border-top: 1px solid var(--border); }
+        .pillar-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            min-width: 26px;
+            margin-top: 2px;
+        }
+        .pillar-body h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .pillar-body p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+        .cta-strip {
+            padding: clamp(56px, 9vw, 100px) var(--px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .cta-strip h2 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(40px, 7vw, 80px);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.92;
+            color: var(--white);
+        }
+        .cta-strip h2 em { color: var(--accent); font-style: italic; }
+
+        /* ── SERVICES ── */
+        .package-block {
+            margin: clamp(28px, 5vw, 56px) var(--px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid var(--border);
+            background: var(--surface);
+        }
+        .package-left {
+            padding: clamp(28px, 5vw, 60px);
+            border-right: 1px solid var(--border);
+        }
+        .package-right { padding: clamp(28px, 5vw, 60px); }
+
+        .price {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(58px, 9vw, 90px);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--white);
+            margin: 12px 0 4px;
+        }
+        .price sup {
+            font-size: clamp(22px, 3vw, 36px);
+            vertical-align: top;
+            margin-top: 10px;
+            display: inline-block;
+            color: var(--accent);
+        }
+        .price sub { font-size: clamp(14px, 2.5vw, 22px); font-weight: 400; color: var(--muted); }
+
+        .package-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(20px, 3vw, 28px);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+            margin: 10px 0 16px;
+            line-height: 1.05;
+        }
+        .package-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.8; }
+
+        .includes-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+        .include-list { list-style: none; }
+        .include-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.55;
+        }
+        .include-list li:last-child { border-bottom: none; }
+        .include-list li::before { content: '—'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--border);
+            margin: 0 var(--px) clamp(28px, 5vw, 56px);
+        }
+        .option-card { background: var(--surface); padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 44px); }
+        .option-tag {
+            display: inline-block;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid rgba(192,148,72,0.35);
+            padding: 5px 10px;
+            margin-bottom: 14px;
+        }
+        .option-card h3 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(18px, 3vw, 26px);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+        .option-card p { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+        .addon-section {
+            padding: clamp(44px, 7vw, 72px) var(--px);
+            border-top: 1px solid var(--border);
+        }
+        .addon-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: clamp(22px, 4vw, 40px) clamp(22px, 4vw, 48px);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+        .addon-card h3 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(20px, 3vw, 30px);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+        .addon-card p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+        .addon-price {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(34px, 5vw, 52px);
+            font-weight: 900;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+        .addon-price span { font-size: 15px; color: var(--muted); font-weight: 400; }
+
+        /* ── LIBRARY ── */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--border);
+        }
+        .cat-card {
+            background: var(--surface);
+            padding: clamp(28px, 4vw, 52px) clamp(22px, 4vw, 44px) clamp(48px, 6vw, 68px);
+            cursor: pointer;
+            transition: background .2s;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .cat-card:hover, .cat-card:active { background: var(--surface-2); }
+        .cat-arrow {
+            position: absolute;
+            bottom: clamp(20px, 3vw, 32px);
+            right: clamp(22px, 4vw, 44px);
+            font-size: 18px;
+            color: var(--accent);
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: opacity .2s, transform .2s;
+        }
+        .cat-card:hover .cat-arrow { opacity: 1; transform: none; }
+        .cat-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .cat-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .cat-count { font-size: 11px; color: var(--muted); }
+
+        #ex-panel { display: none; }
+        #ex-panel.open { display: block; }
+        .panel-inner { padding: clamp(36px, 6vw, 64px) var(--px); }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color .2s;
+            margin-bottom: 36px;
+            padding: 10px 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .back-btn:hover { color: var(--white); }
+
+        .ex-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--border);
+        }
+        .ex-card { background: var(--surface); padding: clamp(20px, 3vw, 32px); }
+        .ex-muscle {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .ex-card h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(16px, 2vw, 18px);
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .ex-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+        /* ── CONTACT ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: clamp(40px, 8vw, 96px);
+            padding: clamp(44px, 7vw, 72px) var(--px) clamp(56px, 9vw, 96px);
+        }
+        .contact-info h3 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+        .contact-info p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+        .detail-item { padding: 15px 0; border-bottom: 1px solid var(--border); }
+        .detail-item:first-child { border-top: 1px solid var(--border); }
+        .detail-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+        .detail-value { font-size: 14px; color: var(--text); }
+
+        .form-group { margin-bottom: 18px; }
+        .form-label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .form-control {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Barlow', sans-serif;
+            font-size: 15px;
+            padding: 14px 16px;
+            outline: none;
+            transition: border-color .2s;
+            -webkit-appearance: none;
+            border-radius: 0;
+            min-height: 50px;
+        }
+        .form-control:focus { border-color: var(--accent); }
+        .form-control::placeholder { color: var(--muted); }
+        textarea.form-control { min-height: 120px; resize: vertical; }
+
+        /* ── CLIENT PORTAL ── */
+        .portal-wrap {
+            min-height: calc(100svh - var(--nav-h));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px var(--px);
+        }
+        .portal-box { width: 100%; max-width: 400px; }
+        .portal-logo {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .portal-logo em { color: var(--accent); font-style: normal; }
+        .portal-sub { font-size: 12px; color: var(--muted); margin-bottom: 40px; }
+        .portal-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 30px;
+            line-height: 0.95;
+        }
+        .portal-footer { font-size: 12px; color: var(--muted); margin-top: 16px; text-align: center; }
+        .portal-footer a { color: var(--accent); cursor: pointer; }
+
+        /* ════ RESPONSIVE ════ */
+
+        /* Tablet ≤ 900px */
+        @media (max-width: 900px) {
+            .nav-links  { display: none; }
+            .hamburger  { display: flex; }
+            .hero-accent-line { display: none; }
+
+            .stats-row  { grid-template-columns: 1fr 1fr; }
+            .stat:nth-child(2) { border-right: none; }
+            .stat:nth-child(3) { border-top: 1px solid var(--border); }
+
+            .about-grid { grid-template-columns: 1fr; }
+            .package-block { grid-template-columns: 1fr; }
+            .package-left { border-right: none; border-bottom: 1px solid var(--border); }
+            .options-grid { grid-template-columns: 1fr; }
+            .cat-grid { grid-template-columns: 1fr 1fr; }
+            .ex-grid  { grid-template-columns: 1fr 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Mobile ≤ 580px */
+        @media (max-width: 580px) {
+            .hero { justify-content: flex-end; padding-bottom: 52px; }
+            .hero-actions { flex-direction: column; }
+            .hero-actions .btn { width: 100%; }
+
+            .stat { padding: 22px var(--px); }
+            .stat-num { font-size: 36px; }
+
+            .cat-grid { grid-template-columns: 1fr; }
+            .ex-grid  { grid-template-columns: 1fr; }
+
+            .cta-strip { flex-direction: column; align-items: flex-start; }
+            .cta-strip .btn { width: 100%; }
+
+            .addon-card { flex-direction: column; gap: 14px; }
+
+            .contact-info { display: none; }
+        }
+
+        /* Very small ≤ 380px */
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 58px; }
+            .mobile-menu a { font-size: 38px; }
+        }
+
+        /* ── HOME EXTENDED SECTIONS ── */
+
+        /* Who it's for */
+        .for-section {
+            padding: clamp(56px, 9vw, 112px) var(--px);
+            border-top: 1px solid var(--border);
+        }
+        .for-intro {
+            max-width: 600px;
+            margin-bottom: clamp(48px, 6vw, 72px);
+        }
+        .for-intro p {
+            font-size: clamp(15px, 2vw, 17px);
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.85;
+            margin-top: 18px;
+        }
+        .for-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--border);
+        }
+        .for-card {
+            background: var(--surface);
+            padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 40px);
+        }
+        .for-icon {
+            font-size: 22px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .for-card h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 19px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 10px;
+            letter-spacing: 0.03em;
+        }
+        .for-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+        /* About me */
+        .about-me {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(40px, 8vw, 96px);
+            align-items: center;
+            padding: clamp(56px, 9vw, 112px) var(--px);
+            border-top: 1px solid var(--border);
+        }
+        .about-me-text h2 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(38px, 6vw, 64px);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.92;
+            color: var(--white);
+            margin-bottom: 24px;
+        }
+        .about-me-text h2 em { color: var(--accent); font-style: italic; }
+        .about-me-text p {
+            font-size: clamp(14px, 1.8vw, 16px);
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+        .about-me-text p:last-of-type { margin-bottom: 32px; }
+        .about-me-visual {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            aspect-ratio: 4/5;
+            display: flex;
+            align-items: flex-end;
+            padding: clamp(24px, 4vw, 40px);
+            position: relative;
+            overflow: hidden;
+        }
+        .about-me-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--surface-2) 0%, var(--bg) 100%);
+        }
+        .about-me-visual::after {
+            content: 'CT';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(100px, 18vw, 200px);
+            font-weight: 900;
+            color: var(--border);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            pointer-events: none;
+        }
+        .about-me-caption {
+            position: relative;
+            z-index: 1;
+        }
+        .about-me-caption strong {
+            display: block;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+            letter-spacing: 0.04em;
+        }
+        .about-me-caption span {
+            font-size: 12px;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* How it works */
+        .how-section {
+            padding: clamp(56px, 9vw, 112px) var(--px);
+            border-top: 1px solid var(--border);
+        }
+        .how-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 32px;
+            margin-bottom: clamp(44px, 6vw, 72px);
+            flex-wrap: wrap;
+        }
+        .how-header p {
+            font-size: clamp(14px, 1.8vw, 15px);
+            font-weight: 300;
+            color: var(--muted);
+            max-width: 340px;
+            line-height: 1.8;
+        }
+        .how-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--border);
+        }
+        .how-step {
+            background: var(--surface);
+            padding: clamp(28px, 4vw, 44px) clamp(22px, 3vw, 36px);
+        }
+        .step-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(40px, 5vw, 60px);
+            font-weight: 900;
+            color: var(--border);
+            line-height: 1;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+        .how-step h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 10px;
+            letter-spacing: 0.03em;
+        }
+        .how-step p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+        /* Pricing snapshot */
+        .pricing-snap {
+            padding: clamp(56px, 9vw, 112px) var(--px);
+            border-top: 1px solid var(--border);
+        }
+        .pricing-snap-header {
+            margin-bottom: clamp(36px, 5vw, 56px);
+        }
+        .pricing-snap-header p {
+            font-size: clamp(14px, 1.8vw, 16px);
+            font-weight: 300;
+            color: var(--muted);
+            max-width: 460px;
+            margin-top: 16px;
+            line-height: 1.8;
+        }
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--border);
+        }
+        .pricing-card {
+            background: var(--surface);
+            padding: clamp(32px, 5vw, 56px) clamp(28px, 5vw, 52px);
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card.featured { background: var(--surface-2); }
+        .pricing-card-tag {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        .pricing-card h3 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(24px, 3.5vw, 36px);
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .pricing-card-price {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(48px, 7vw, 80px);
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin: 16px 0 4px;
+        }
+        .pricing-card-price sup { font-size: 0.38em; color: var(--accent); vertical-align: top; margin-top: 0.3em; }
+        .pricing-card-price sub { font-size: 0.28em; color: var(--muted); font-weight: 400; }
+        .pricing-card-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.75;
+            margin: 16px 0 28px;
+            flex: 1;
+        }
+
+        @media (max-width: 900px) {
+            .for-grid { grid-template-columns: 1fr 1fr; }
+            .about-me { grid-template-columns: 1fr; }
+            .about-me-visual { aspect-ratio: 3/2; }
+            .how-steps { grid-template-columns: 1fr 1fr; }
+            .pricing-cards { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 580px) {
+            .for-grid { grid-template-columns: 1fr; }
+            .how-steps { grid-template-columns: 1fr; }
+            .how-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="logo" onclick="go('home')">CT<em>.</em>PT</div>
+    <ul class="nav-links">
+        <li><a id="nl-home"     onclick="go('home')"     class="active">Home</a></li>
+        <li><a id="nl-services" onclick="go('services')">Services</a></li>
+        <li><a id="nl-library"  onclick="go('library')">Library</a></li>
+        <li><a id="nl-contact"  onclick="go('contact')">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+    <a id="ml-home"     onclick="go('home')">Home</a>
+    <a id="ml-services" onclick="go('services')">Services</a>
+    <a id="ml-library"  onclick="go('library')">Library</a>
+    <a id="ml-contact"  onclick="go('contact')">Contact</a>
+</div>
+
+<!-- HOME -->
+<div class="page active fade-in" id="page-home">
+
+    <!-- Hero -->
+    <section class="hero">
+        <p class="hero-tag">CT Personal Training — Coach Taj</p>
+        <h1>Be the best<br>version <em>of you.</em></h1>
+        <p class="hero-sub">Consistency over perfection. Real coaching, real accountability — built around your training, your nutrition, and your life.</p>
+        <div class="hero-actions">
+            <button class="btn btn-gold" onclick="go('services')">See How It Works</button>
+            <button class="btn btn-outline" onclick="go('contact')">Get in Touch</button>
+        </div>
+        <div class="hero-accent-line"><span>CT Fitness</span></div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat"><div class="stat-num">1<em>:1</em></div><div class="stat-label">Coaching Only</div></div>
+        <div class="stat"><div class="stat-num">$<em>120</em></div><div class="stat-label">Per Week AUD</div></div>
+        <div class="stat"><div class="stat-num"><em>0</em></div><div class="stat-label">Cookie-Cutter Plans</div></div>
+        <div class="stat"><div class="stat-num"><em>∞</em></div><div class="stat-label">Program Adjustments</div></div>
+    </div>
+
+    <!-- Who it's for -->
+    <section class="for-section">
+        <div class="for-intro">
+            <p class="eyebrow">Who This Is For</p>
+            <h2 class="section-title">Doesn't matter<br>where you're at.</h2>
+            <p>Good coaching isn't reserved for athletes or people with perfect schedules. It's for anyone ready to be consistent — whether that's with their training, their nutrition, or just building a routine that sticks. If you're willing to show up, I'll make sure it's worth it.</p>
+        </div>
+        <div class="for-grid">
+            <div class="for-card">
+                <span class="for-icon">🏁</span>
+                <h4>Just Getting Started</h4>
+                <p>You've decided to take training seriously but don't know where to begin. We'll build a solid foundation, teach you the movements properly, and make sure your first few months actually set you up for long-term progress.</p>
+            </div>
+            <div class="for-card">
+                <span class="for-icon">📈</span>
+                <h4>Stuck at a Plateau</h4>
+                <p>You've been training for a while but progress has stalled. Could be programming, recovery, nutrition — usually a mix. Fresh eyes on your training often make all the difference.</p>
+            </div>
+            <div class="for-card">
+                <span class="for-icon">⏱️</span>
+                <h4>Time-Poor but Motivated</h4>
+                <p>Life is busy. You don't have time to waste on training that doesn't work. Your program will be built around your actual schedule — not an ideal one that doesn't exist.</p>
+            </div>
+            <div class="for-card">
+                <span class="for-icon">🎯</span>
+                <h4>Training Towards Something</h4>
+                <p>A goal — aesthetic, performance, or somewhere in between. Having a specific target makes programming more purposeful and keeps you moving in one clear direction.</p>
+            </div>
+            <div class="for-card">
+                <span class="for-icon">🤝</span>
+                <h4>Needs Accountability</h4>
+                <p>You know what you should be doing — you just don't always do it alone. Having someone who checks in, notices, and adjusts changes everything. Most people underestimate how much this matters.</p>
+            </div>
+            <div class="for-card">
+                <span class="for-icon">💡</span>
+                <h4>Wants to Actually Learn</h4>
+                <p>Not just told what to do, but understanding why. The goal is for you to eventually know your body well enough that you could program for yourself — a good coach works towards that, not against it.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About me -->
+    <section class="about-me">
+        <div class="about-me-visual">
+            <div class="about-me-caption">
+                <strong>Taj — Coach &amp; Founder</strong>
+                <span>CT Personal Training</span>
+            </div>
+        </div>
+        <div class="about-me-text">
+            <p class="eyebrow">A Bit About Me</p>
+            <h2>Hey, I'm <em>Taj.</em><br>Let's get to work.</h2>
+            <p>I started CT Personal Training because I genuinely believe movement is medicine — and that everyone deserves coaching that treats them like an individual, not a template. Whether it's getting stronger, losing body fat, or just building habits that actually stick, the approach is always the same: honest, practical, and built around your real life.</p>
+            <p>Nutrition is just as much a part of this as training. I've seen people put in serious effort in the gym and barely move the needle because their diet wasn't supporting it. We look at both — not with rigid meal plans you'll hate, but with education and habits that make sense long-term.</p>
+            <p>I coach in-person and online, and it's the same price either way. If you can get in for your weekly session, brilliant — I'll be there. If life gets in the way, we catch up on a call. No fuss.</p>
+            <button class="btn btn-outline" onclick="go('contact')">Work With Me</button>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-section">
+        <div class="how-header">
+            <div>
+                <p class="eyebrow">The Process</p>
+                <h2 class="section-title">How it<br>works.</h2>
+            </div>
+            <p>Simple by design. No long onboarding, no complicated systems — just coaching that starts working from week one.</p>
+        </div>
+        <div class="how-steps">
+            <div class="how-step">
+                <div class="step-num">01</div>
+                <h4>Get in Touch</h4>
+                <p>Fill in the contact form or send a message. Tell me a bit about where you're at, what you're after, and whether you'd prefer in-person or online. No commitment required.</p>
+            </div>
+            <div class="how-step">
+                <div class="step-num">02</div>
+                <h4>Intro Conversation</h4>
+                <p>We'll have a quick chat — in person or on a call — to talk through your goals, training history, schedule, and what a realistic plan looks like. This is where we figure out if we're a good fit.</p>
+            </div>
+            <div class="how-step">
+                <div class="step-num">03</div>
+                <h4>Your Program's Ready</h4>
+                <p>I'll write your first week of programming based on everything we discussed. It lands in your client dashboard before your first session so you know exactly what to expect going in.</p>
+            </div>
+            <div class="how-step">
+                <div class="step-num">04</div>
+                <h4>We Get to Work</h4>
+                <p>Weekly sessions or calls, ongoing support between them, and a program that evolves as you do. This is where it actually happens — and it tends to compound faster than people expect.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing snapshot -->
+    <section class="pricing-snap">
+        <div class="pricing-snap-header">
+            <p class="eyebrow">Pricing</p>
+            <h2 class="section-title">Straightforward.<br>No surprises.</h2>
+            <p>Two options depending on what you need. Full coaching if you want the whole package, or casual in-person sessions if you just want to show up and train.</p>
+        </div>
+        <div class="pricing-cards">
+            <div class="pricing-card featured">
+                <div class="pricing-card-tag">Most Popular</div>
+                <h3>Full-Service<br>Weekly Coaching</h3>
+                <div class="pricing-card-price"><sup>$</sup>120<sub> /week</sub></div>
+                <p class="pricing-card-desc">Individualised programming, weekly check-in (in-person or online), nutrition guidance, ongoing messaging support, and access to your client dashboard. Everything you need, nothing you don't.</p>
+                <button class="btn btn-gold" onclick="go('services')">See Full Details</button>
+            </div>
+            <div class="pricing-card">
+                <div class="pricing-card-tag">Casual Option</div>
+                <h3>In-Person<br>Training Only</h3>
+                <div class="pricing-card-price"><sup>$</sup>100<sub> /session</sub></div>
+                <p class="pricing-card-desc">45-minute in-person sessions with hands-on coaching. No ongoing commitment — book when it suits you. Good if you just want to train with someone without the full coaching setup.</p>
+                <button class="btn btn-outline" onclick="go('services')">See Full Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pillars -->
+    <section class="about-grid">
+        <div>
+            <p class="eyebrow">What Makes It Work</p>
+            <h2 class="section-title">Training <em>and</em><br>nutrition. Both.</h2>
+            <p class="section-body" style="margin-top: 20px; max-width: 440px;">Most coaches focus on one or the other. Training without dialling in your nutrition is leaving results on the table — and the same goes the other way around. We work on both, because that's what actually moves the needle.</p>
+        </div>
+        <div>
+            <div class="pillar"><div class="pillar-num">01</div><div class="pillar-body"><h4>Individualised Programming</h4><p>Written for you specifically. Adjusted each week based on how you're actually responding — not a fixed schedule you follow blindly.</p></div></div>
+            <div class="pillar"><div class="pillar-num">02</div><div class="pillar-body"><h4>Nutrition That Makes Sense</h4><p>High protein targets, balanced plates, habits that fit your lifestyle. Education-first — so you understand what you're doing and why, not just following rules.</p></div></div>
+            <div class="pillar"><div class="pillar-num">03</div><div class="pillar-body"><h4>Flexible Check-Ins</h4><p>In-person or a call — your choice each week. Life changes week to week, and your check-in format can keep up with that.</p></div></div>
+            <div class="pillar"><div class="pillar-num">04</div><div class="pillar-body"><h4>Consistency Over Perfection</h4><p>Progress isn't linear and it doesn't have to be perfect. Good coaching accounts for real life — and keeps you moving forward through it.</p></div></div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-strip">
+        <div>
+            <h2>Not sure where<br>to <em>start?</em></h2>
+            <p style="font-size: 15px; color: var(--muted); margin-top: 14px; font-weight: 300; max-width: 380px; line-height: 1.75;">That's what the first conversation is for. Reach out, tell me a bit about where you're at, and we'll figure out the rest. You can also find me on Instagram at <span style="color: var(--accent);">@coach_taj_</span> if you want to see what I'm about first.</p>
+        </div>
+        <button class="btn btn-gold" onclick="go('contact')">Get in Touch</button>
+    </div>
+
+    <footer>
+        <div class="footer-logo">CT<em>.</em>Personal Training</div>
+        <div style="display:flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+            <a href="https://www.instagram.com/coach_taj_" target="_blank" style="font-size:12px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; transition: color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">@coach_taj_</a>
+            <div class="footer-copy">© 2025 CT Personal Training</div>
+        </div>
+    </footer>
+</div>
+
+<!-- SERVICES -->
+<div class="page" id="page-services">
+    <div class="page-header">
+        <p class="eyebrow">What's Included</p>
+        <h1>Ongoing<br>Coaching</h1>
+        <p>One package. Everything you need to train properly and progress consistently. No upsells on the basics.</p>
+    </div>
+
+    <div class="package-block">
+        <div class="package-left">
+            <p class="eyebrow">Weekly Coaching Package</p>
+            <div class="price"><sup>$</sup>120<sub> /wk</sub></div>
+            <div class="package-name">Full-Service<br>Fitness Coaching</div>
+            <p class="package-desc">A complete coaching service for people who want to train with a proper plan and make consistent, measurable progress — without needing to be in the gym with a trainer every session.</p>
+        </div>
+        <div class="package-right">
+            <p class="includes-label">What's Included Every Week</p>
+            <ul class="include-list">
+                <li>Fully individualised training program, written and updated based on your progress and weekly feedback</li>
+                <li>Weekly check-in — in person during your training session, or a call if you can't make it in that week</li>
+                <li>Nutrition guidance — practical targets and habits tailored to your lifestyle and goals</li>
+                <li>Messaging support throughout the week for questions, form checks, and adjustments</li>
+                <li>Progress tracking — weight, photos, and performance reviewed and acted on regularly</li>
+                <li>Access to your personal client dashboard with programs, check-in history, and coaching notes</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="options-grid">
+        <div class="option-card">
+            <span class="option-tag">Option A</span>
+            <h3>In-Person Check-In</h3>
+            <p>Your weekly check-in happens while you train. Real-time coaching, form feedback, and full accountability built into the session — no extra time out of your day, no extra cost.</p>
+        </div>
+        <div class="option-card">
+            <span class="option-tag">Option B</span>
+            <h3>Can't Make It In?</h3>
+            <p>Can't make it in person that week? No problem — we jump on a call instead. Training review, how you're feeling, what to adjust. Same information, same attention. Different setting.</p>
+        </div>
+    </div>
+
+    <div style="padding: clamp(44px, 7vw, 72px) var(--px); border-top: 1px solid var(--border);">
+        <p class="eyebrow">Second Option</p>
+        <h2 class="section-title">Just Want the<br><em>Session?</em></h2>
+        <p class="section-body" style="max-width: 500px; margin-top: 14px;">Not ready for a full coaching package, or just prefer to keep it simple? You can book in-person sessions on their own — no program, no check-ins, no commitment beyond the session itself.</p>
+    </div>
+
+    <div class="package-block" style="margin-top: 0;">
+        <div class="package-left">
+            <p class="eyebrow">Casual In-Person Sessions</p>
+            <div class="price"><sup>$</sup>100<sub> /session</sub></div>
+            <div class="package-name">In-Person<br>Training Only</div>
+            <p class="package-desc">Show up, train hard, get coached through your session. No ongoing commitment, no extras. Just good hands-on training when you want it.</p>
+        </div>
+        <div class="package-right">
+            <p class="includes-label">What's Included</p>
+            <ul class="include-list">
+                <li>45-minute in-person training session</li>
+                <li>Hands-on coaching and form feedback throughout</li>
+                <li>Session programming provided on the day — just bring yourself</li>
+                <li>No lock-in, no ongoing commitment — book as you need</li>
+            </ul>
+            <p style="font-size: 12px; color: var(--muted); margin-top: 24px; line-height: 1.7; border-top: 1px solid var(--border); padding-top: 20px;">Already on the weekly coaching package? Additional sessions are available at this same rate — just reach out to lock one in.</p>
+        </div>
+    </div>
+
+    <div class="cta-strip">
+        <h2>Sound like<br>a <em>fit?</em></h2>
+        <button class="btn btn-gold" onclick="go('contact')">Get Started</button>
+    </div>
+
+    <footer>
+        <div class="footer-logo">CT<em>.</em>Fitness</div>
+        <div class="footer-copy">© 2025 CT Fitness. All rights reserved.</div>
+    </footer>
+</div>
+
+<!-- LIBRARY -->
+<div class="page" id="page-library">
+    <div class="page-header">
+        <p class="eyebrow">Reference</p>
+        <h1>Exercise<br>Library</h1>
+        <p>Movement breakdowns and coaching cues. Select a muscle group to get started.</p>
+    </div>
+
+    <div id="cat-view">
+        <div class="cat-grid">
+            <div class="cat-card" onclick="openCat('chest')"><div class="cat-num">01</div><div class="cat-name">Chest</div><div class="cat-count">6 exercises</div><span class="cat-arrow">→</span></div>
+            <div class="cat-card" onclick="openCat('back')"><div class="cat-num">02</div><div class="cat-name">Back</div><div class="cat-count">7 exercises</div><span class="cat-arrow">→</span></div>
+            <div class="cat-card" onclick="openCat('shoulders')"><div class="cat-num">03</div><div class="cat-name">Shoulders</div><div class="cat-count">5 exercises</div><span class="cat-arrow">→</span></div>
+            <div class="cat-card" onclick="openCat('legs')"><div class="cat-num">04</div><div class="cat-name">Legs</div><div class="cat-count">8 exercises</div><span class="cat-arrow">→</span></div>
+            <div class="cat-card" onclick="openCat('arms')"><div class="cat-num">05</div><div class="cat-name">Arms</div><div class="cat-count">6 exercises</div><span class="cat-arrow">→</span></div>
+            <div class="cat-card" onclick="openCat('core')"><div class="cat-num">06</div><div class="cat-name">Core</div><div class="cat-count">5 exercises</div><span class="cat-arrow">→</span></div>
+        </div>
+    </div>
+
+    <div id="ex-panel">
+        <div class="panel-inner">
+            <button class="back-btn" onclick="closeCat()">← All Muscle Groups</button>
+            <h2 id="ex-title" class="section-title" style="margin-bottom: 32px;"></h2>
+            <div class="ex-grid" id="ex-grid"></div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 64px;">
+        <div class="footer-logo">CT<em>.</em>Fitness</div>
+        <div class="footer-copy">© 2025 CT Fitness. All rights reserved.</div>
+    </footer>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+    <div class="page-header">
+        <p class="eyebrow">Reach Out</p>
+        <h1>Get in<br>Touch</h1>
+        <p>Questions, or ready to get started? Fill in the form and I'll come back to you within 24 hours.</p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="contact-info">
+            <h3>Before You Reach Out</h3>
+            <p>If you're undecided, that's fine — the form is the right place to ask questions too. No commitment required.</p>
+            <div>
+                <div class="detail-item"><div class="detail-label">Response Time</div><div class="detail-value">Within 24 hours</div></div>
+                <div class="detail-item"><div class="detail-label">Coaching Rate</div><div class="detail-value">$120 AUD / week</div></div>
+                <div class="detail-item"><div class="detail-label">In-Person</div><div class="detail-value">Available at no extra charge</div></div>
+                <div class="detail-item"><div class="detail-label">Online</div><div class="detail-value">Available anywhere</div></div>
+                <div class="detail-item"><div class="detail-label">Additional Sessions</div><div class="detail-value">$100 / 45 min</div></div>
+            </div>
+        </div>
+        <div>
+            <div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-control" placeholder="First and last name" autocomplete="name"></div>
+            <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-control" placeholder="you@example.com" autocomplete="email"></div>
+            <div class="form-group">
+                <label class="form-label">Main Goal</label>
+                <select class="form-control">
+                    <option value="" disabled selected>Select a goal</option>
+                    <option>Build muscle / strength</option>
+                    <option>Lose body fat</option>
+                    <option>Body recomposition</option>
+                    <option>Improve general fitness</option>
+                    <option>Something else</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">In-Person or Online?</label>
+                <select class="form-control">
+                    <option value="" disabled selected>Select preference</option>
+                    <option>In-person weekly</option>
+                    <option>Online weekly</option>
+                    <option>Mix of both</option>
+                    <option>Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group"><label class="form-label">Anything Else?</label><textarea class="form-control" placeholder="Training background, schedule, questions — anything relevant"></textarea></div>
+            <button class="btn btn-gold" style="width:100%; padding:18px 32px;">Send Message</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">CT<em>.</em>Fitness</div>
+        <div class="footer-copy">© 2025 CT Fitness. All rights reserved.</div>
+    </footer>
+</div>
+
+<!-- CLIENT PORTAL -->
+<div class="page" id="page-client">
+    <div class="portal-wrap">
+        <div class="portal-box">
+            <div class="portal-logo">CT<em>.</em>Fitness</div>
+            <div class="portal-sub">Client Portal</div>
+            <div class="portal-title">Sign In</div>
+            <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-control" placeholder="you@example.com" autocomplete="email"></div>
+            <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-control" placeholder="••••••••" autocomplete="current-password"></div>
+            <button class="btn btn-gold" style="width:100%; padding:18px 32px; margin-top:8px;">Sign In</button>
+            <p class="portal-footer">Access issues? <a onclick="go('contact')">Contact your coach</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const data = {
+        chest: { label:'Chest', exercises:[
+            {name:'Flat Barbell Bench Press',muscle:'Pectorals — Mid',cue:'Controlled descent, full stretch at the bottom. Drive through the chest, not the front deltoids. Elbows at roughly 70° from the torso.'},
+            {name:'Incline Dumbbell Press',muscle:'Pectorals — Upper',cue:'Bench at 30–45°. Prioritise range of motion over load. Feel the upper chest working throughout.'},
+            {name:'Cable Fly',muscle:'Pectorals — Stretch',cue:'Slight bend in the elbows throughout. Excellent stretch-focused movement. Focus on pec contraction, not shoulder.'},
+            {name:'Dips',muscle:'Pectorals / Triceps',cue:'Slight forward lean biases chest. Control the descent. Avoid excessive depth if shoulder sensitive.'},
+            {name:'Machine Chest Press',muscle:'Pectorals — General',cue:'Good for consistent stimulus and isolation. Useful for high-rep finishers or deload weeks.'},
+            {name:'Weighted Push-Up',muscle:'Pectorals — General',cue:'Underrated. Elevate feet for upper chest emphasis. Add a plate on the back for progressive overload.'},
+        ]},
+        back: { label:'Back', exercises:[
+            {name:'Barbell Row',muscle:'Lats / Mid-Back',cue:'Hip hinge, neutral spine. Drive elbows back and in. Squeeze briefly at the top. Control the descent.'},
+            {name:'Pull-Up / Chin-Up',muscle:'Lats / Biceps',cue:'Dead hang at the bottom, chin over bar at the top. Chin-up with supinated grip biases biceps more.'},
+            {name:'Seated Cable Row',muscle:'Mid-Back / Lats',cue:'Allow slight forward lean for a lat stretch. Row into lower ribcage. Avoid shrugging at the top.'},
+            {name:'Lat Pulldown',muscle:'Lats',cue:'Pull bar to upper chest. Initiate with elbows, not hands. Keep chest tall throughout the movement.'},
+            {name:'Single-Arm DB Row',muscle:'Lats / Mid-Back',cue:'Brace on a bench. Think elbow to hip. Allows heavy loading with strong lat isolation.'},
+            {name:'Face Pull',muscle:'Rear Delt / Rotator Cuff',cue:'Pull to nose or forehead height. Elbows high. Key for shoulder health — included in most programs.'},
+            {name:'Trap Bar Deadlift',muscle:'Full Posterior Chain',cue:'Neutral grip, hips drive through at lockout. Excellent general strength movement with low technical demand.'},
+        ]},
+        shoulders: { label:'Shoulders', exercises:[
+            {name:'Overhead Press',muscle:'Anterior / Medial Delt',cue:'Seated or standing. Full lockout overhead. Avoid excessive lumbar extension.'},
+            {name:'Lateral Raise',muscle:'Medial Delt',cue:'The key to shoulder width. Lead with the elbow, slight internal rotation. The descent is where the work is.'},
+            {name:'Rear Delt Fly',muscle:'Rear Delt',cue:'Keep elbows soft, drive them wide and back. Often neglected — train it consistently.'},
+            {name:'Arnold Press',muscle:'Anterior / Medial Delt',cue:'Rotation through the press hits both anterior and medial heads effectively.'},
+            {name:'Cable Lateral Raise',muscle:'Medial Delt',cue:'Keeps tension through the full ROM — an advantage over dumbbells. Low pulley, cross-body position.'},
+        ]},
+        legs: { label:'Legs', exercises:[
+            {name:'Back Squat',muscle:'Quads / Glutes / Chain',cue:'Depth to at least parallel. Knees track toes. Brace hard throughout. Bar stays over mid-foot.'},
+            {name:'Romanian Deadlift',muscle:'Hamstrings / Glutes',cue:'Push hips back, maintain tension through the hamstrings. Feel the stretch — not the lower back.'},
+            {name:'Leg Press',muscle:'Quads / Glutes',cue:'Foot position changes emphasis. High and wide = glutes. Low and narrow = quads.'},
+            {name:'Bulgarian Split Squat',muscle:'Quads / Glutes',cue:'Rear foot elevated. Front shin angle drives quad or glute emphasis. Control the descent.'},
+            {name:'Lying / Seated Leg Curl',muscle:'Hamstrings',cue:'Seated provides better hamstring stretch. Use both variations across a block.'},
+            {name:'Leg Extension',muscle:'Quads',cue:'Good quad isolation in shortened position. Pair with RDL for balanced programming.'},
+            {name:'Hip Thrust',muscle:'Glutes',cue:'Best glute isolation available. Chin tucked, ribs down. Drive through the heel. Full hip extension at top.'},
+            {name:'Walking Lunge',muscle:'Quads / Glutes',cue:'Long step biases glutes, shorter step biases quads. Good unilateral movement with balance challenge.'},
+        ]},
+        arms: { label:'Arms', exercises:[
+            {name:'Barbell Curl',muscle:'Biceps',cue:"Keep elbows fixed. Control the descent — don't swing. Classic mass builder."},
+            {name:'Incline Dumbbell Curl',muscle:'Biceps — Long Head',cue:'Arms behind torso = excellent long-head stretch. One of the best bicep exercises available.'},
+            {name:'Hammer Curl',muscle:'Brachialis / Forearms',cue:'Neutral grip. Adds arm thickness and forearm development. Works well as a finishing movement.'},
+            {name:'Skull Crusher',muscle:'Triceps — Long Head',cue:'EZ bar to forehead level. Keep elbows pointed at the ceiling. Good long-head work in a stretched position.'},
+            {name:'Cable Tricep Pushdown',muscle:'Triceps — General',cue:'Elbows fixed at sides. Full extension at the bottom. Rope attachment allows natural wrist rotation.'},
+            {name:'Overhead Tricep Extension',muscle:'Triceps — Long Head',cue:'Arms overhead = long head fully stretched. One of the most effective tricep exercises available.'},
+        ]},
+        core: { label:'Core', exercises:[
+            {name:'Dead Bug',muscle:'Deep Core / Anti-Extension',cue:'Lumbar flat to the floor throughout. Opposite arm and leg lower slowly. Control the position completely.'},
+            {name:'Ab Wheel Rollout',muscle:'Rectus Abdominis',cue:"High-demand movement. Start from knees. Keep hips in line — don't allow the lower back to collapse."},
+            {name:'Pallof Press',muscle:'Anti-Rotation',cue:'Stand perpendicular to the cable. Press out and resist the rotation. Underused and highly effective.'},
+            {name:'Hanging Leg Raise',muscle:'Lower Abs / Hip Flexors',cue:'Control the swing. Posterior tilt at the top for full rectus involvement. Scale to knee raises if needed.'},
+            {name:'Cable Crunch',muscle:'Rectus Abdominis',cue:'Hinge at the hips, pull with the abs — not the arms. Good direct ab hypertrophy movement.'},
+        ]},
+    };
+
+    const navIds = ['home','services','library','contact'];
+
+    function go(id) {
+        closeMenu();
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active','fade-in'));
+        navIds.forEach(n => {
+            const d = document.getElementById('nl-'+n);
+            const m = document.getElementById('ml-'+n);
+            if(d) d.classList.remove('active');
+            if(m) m.classList.remove('active');
+        });
+        const page = document.getElementById('page-'+id);
+        page.classList.add('active');
+        void page.offsetWidth;
+        page.classList.add('fade-in');
+        const nl = document.getElementById('nl-'+id);
+        const ml = document.getElementById('ml-'+id);
+        if(nl) nl.classList.add('active');
+        if(ml) ml.classList.add('active');
+        window.scrollTo({top:0,behavior:'instant'});
+    }
+
+    function toggleMenu() {
+        const ham  = document.getElementById('hamburger');
+        const menu = document.getElementById('mobile-menu');
+        const open = menu.classList.contains('open');
+        ham.classList.toggle('open', !open);
+        menu.classList.toggle('open', !open);
+        document.body.style.overflow = open ? '' : 'hidden';
+    }
+
+    function closeMenu() {
+        document.getElementById('hamburger').classList.remove('open');
+        document.getElementById('mobile-menu').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function openCat(key) {
+        const cat = data[key];
+        document.getElementById('ex-title').textContent = cat.label;
+        document.getElementById('ex-grid').innerHTML = cat.exercises.map(e =>
+            `<div class="ex-card"><div class="ex-muscle">${e.muscle}</div><h4>${e.name}</h4><p>${e.cue}</p></div>`
+        ).join('');
+        document.getElementById('cat-view').style.display = 'none';
+        document.getElementById('ex-panel').classList.add('open');
+        window.scrollTo({top:0,behavior:'instant'});
+    }
+
+    function closeCat() {
+        document.getElementById('cat-view').style.display = 'block';
+        document.getElementById('ex-panel').classList.remove('open');
+        window.scrollTo({top:0,behavior:'instant'});
+    }
+
+    if(window.location.hash==='#client'||window.location.pathname.toLowerCase().includes('client')) go('client');
+</script>
+</body>
+</html>
