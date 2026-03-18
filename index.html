@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CT Personal Training — Coach Taj</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 /* ── TOKENS ── */
 :root {
@@ -1423,11 +1424,11 @@ textarea.form-control { min-height:120px; resize:vertical; }
       </div>
     </div>
     <div>
-      <div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-control" placeholder="First and last name" autocomplete="name"></div>
-      <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-control" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="form-group"><label class="form-label">Your Name</label><input id="cf-name" type="text" class="form-control" placeholder="First and last name" autocomplete="name"></div>
+      <div class="form-group"><label class="form-label">Email Address</label><input id="cf-email" type="email" class="form-control" placeholder="you@example.com" autocomplete="email"></div>
       <div class="form-group">
         <label class="form-label">Main Goal</label>
-        <select class="form-control">
+        <select id="cf-goal" class="form-control">
           <option value="" disabled selected>Select a goal</option>
           <option>Build muscle / strength</option>
           <option>Lose body fat</option>
@@ -1438,7 +1439,7 @@ textarea.form-control { min-height:120px; resize:vertical; }
       </div>
       <div class="form-group">
         <label class="form-label">In-Person or Online?</label>
-        <select class="form-control">
+        <select id="cf-preference" class="form-control">
           <option value="" disabled selected>Select preference</option>
           <option>In-person weekly</option>
           <option>Online weekly</option>
@@ -1446,8 +1447,9 @@ textarea.form-control { min-height:120px; resize:vertical; }
           <option>Not sure yet</option>
         </select>
       </div>
-      <div class="form-group"><label class="form-label">Anything Else?</label><textarea class="form-control" placeholder="Training background, schedule, questions — anything relevant"></textarea></div>
-      <button class="btn btn-gold" style="width:100%;padding:18px 32px;">Send Message</button>
+      <div class="form-group"><label class="form-label">Anything Else?</label><textarea id="cf-message" class="form-control" placeholder="Training background, schedule, questions — anything relevant"></textarea></div>
+      <button id="cf-submit" class="btn btn-gold" style="width:100%;padding:18px 32px;" onclick="submitContact()">Send Message</button>
+      <p id="cf-feedback" style="display:none;font-size:13px;margin-top:14px;text-align:center;letter-spacing:0.04em;"></p>
     </div>
   </div>
   <footer>
@@ -1577,6 +1579,72 @@ function closeCat(){
 }
 
 if(window.location.hash==='#client'||window.location.pathname.toLowerCase().includes('client'))go('client');
+
+// ── EMAILJS ──
+emailjs.init({ publicKey: 'U266Bd5p6A5eEeLhv' });
+
+function submitContact() {
+  const name       = document.getElementById('cf-name').value.trim();
+  const email      = document.getElementById('cf-email').value.trim();
+  const goal       = document.getElementById('cf-goal').value;
+  const preference = document.getElementById('cf-preference').value;
+  const message    = document.getElementById('cf-message').value.trim();
+  const btn        = document.getElementById('cf-submit');
+  const feedback   = document.getElementById('cf-feedback');
+
+  // Basic validation
+  if (!name || !email) {
+    feedback.style.display = 'block';
+    feedback.style.color   = '#F44336';
+    feedback.textContent   = 'Please fill in your name and email before sending.';
+    return;
+  }
+
+  // Loading state
+  btn.disabled     = true;
+  btn.textContent  = 'Sending…';
+  btn.style.opacity = '0.7';
+  feedback.style.display = 'none';
+
+  emailjs.send('service_z67h1ff', 'template_p09nsek', {
+    from_name:   name,
+    from_email:  email,
+    goal:        goal   || 'Not specified',
+    preference:  preference || 'Not specified',
+    message:     message || 'No additional message',
+    reply_to:    email,
+  })
+  .then(() => {
+    btn.textContent   = '✓ Message Sent';
+    btn.style.opacity = '1';
+    btn.style.background = '#4CAF50';
+    feedback.style.display  = 'block';
+    feedback.style.color    = '#4CAF50';
+    feedback.textContent    = "Got it — I'll be in touch within 24 hours.";
+    // Clear fields
+    document.getElementById('cf-name').value      = '';
+    document.getElementById('cf-email').value     = '';
+    document.getElementById('cf-goal').value      = '';
+    document.getElementById('cf-preference').value = '';
+    document.getElementById('cf-message').value   = '';
+    // Reset button after 4s
+    setTimeout(() => {
+      btn.disabled         = false;
+      btn.textContent      = 'Send Message';
+      btn.style.background = '';
+      btn.style.opacity    = '1';
+    }, 4000);
+  })
+  .catch((err) => {
+    console.error('EmailJS error:', err);
+    btn.disabled    = false;
+    btn.textContent = 'Send Message';
+    btn.style.opacity = '1';
+    feedback.style.display = 'block';
+    feedback.style.color   = '#F44336';
+    feedback.textContent   = 'Something went wrong — please try again or reach out on Instagram.';
+  });
+}
 </script>
 </body>
 </html>
